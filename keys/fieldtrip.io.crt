@@ -1,0 +1,99 @@
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number: 4 (0x4)
+    Signature Algorithm: sha256WithRSAEncryption
+        Issuer: C=US, ST=CA, L=SanFrancisco, O=SFEI Systems Inc., OU=SSI-openvpn, CN=SFEI Systems Inc. CA/name=ssiops/emailAddress=super-ops@ssiops.org
+        Validity
+            Not Before: Jul 10 12:56:40 2014 GMT
+            Not After : Jul  7 12:56:40 2024 GMT
+        Subject: C=US, ST=CA, L=SanFrancisco, O=SFEI Systems Inc., OU=SSI Super-OPS, CN=fieldtrip.io/name=ssiops/emailAddress=super-ops@ssiops.org
+        Subject Public Key Info:
+            Public Key Algorithm: rsaEncryption
+                Public-Key: (2048 bit)
+                Modulus:
+                    00:bd:96:7b:0e:e7:20:61:ef:f3:6c:ab:2a:7f:23:
+                    f7:b8:fd:9a:10:a1:2d:71:9e:10:3a:34:30:02:a0:
+                    e3:86:4d:36:06:a5:31:c4:67:5e:7a:3a:a7:c7:09:
+                    77:55:77:67:75:f6:43:77:75:8d:c0:9c:d2:66:76:
+                    ae:7c:4d:01:95:db:2e:10:7f:e7:82:38:27:4b:75:
+                    73:de:58:fa:79:00:de:3a:ea:b7:f6:80:67:f4:ea:
+                    76:4e:8d:0d:fc:94:2e:87:36:b5:dc:2e:1f:88:a9:
+                    ae:19:30:8e:da:f4:da:a1:57:9b:50:cd:9f:b7:47:
+                    44:54:ab:35:af:84:32:c5:3f:f2:31:7c:61:a0:cf:
+                    62:e2:62:9c:ab:61:d6:bd:54:77:aa:f2:b6:95:3d:
+                    9d:d8:1e:8f:45:76:df:0d:e7:a4:20:34:a2:6b:2c:
+                    05:bd:9d:02:7d:03:b6:35:d4:09:84:c2:5b:db:e4:
+                    df:33:76:7f:b6:9c:fb:0d:a2:63:8b:ab:55:48:70:
+                    b1:28:5e:d6:3b:43:32:f2:87:5c:60:3c:cd:9f:56:
+                    f2:60:70:06:30:a3:91:85:e0:e4:ea:b1:55:a3:86:
+                    d0:ec:a8:c5:35:62:ba:c8:84:da:27:2d:45:7e:48:
+                    c7:7b:8b:a6:4a:56:22:7d:f9:9d:64:8d:46:51:80:
+                    52:a9
+                Exponent: 65537 (0x10001)
+        X509v3 extensions:
+            X509v3 Basic Constraints: 
+                CA:FALSE
+            Netscape Cert Type: 
+                SSL Server
+            Netscape Comment: 
+                Easy-RSA Generated Server Certificate
+            X509v3 Subject Key Identifier: 
+                31:CD:67:50:6C:86:CE:DC:40:D0:74:8E:94:96:E2:35:CA:61:6E:05
+            X509v3 Authority Key Identifier: 
+                keyid:0F:5F:4B:27:5A:96:B4:3B:C3:86:04:E5:D7:97:F0:6D:4E:8C:4D:16
+                DirName:/C=US/ST=CA/L=SanFrancisco/O=SFEI Systems Inc./OU=SSI-openvpn/CN=SFEI Systems Inc. CA/name=ssiops/emailAddress=super-ops@ssiops.org
+                serial:CD:3A:60:3D:2F:BA:66:A0
+
+            X509v3 Extended Key Usage: 
+                TLS Web Server Authentication
+            X509v3 Key Usage: 
+                Digital Signature, Key Encipherment
+    Signature Algorithm: sha256WithRSAEncryption
+         8e:56:9c:32:9d:ed:bc:1e:5e:ff:53:a0:ec:2e:8c:a4:7b:ba:
+         b7:bc:a6:61:22:b6:d3:10:e1:fc:21:b2:8a:e8:89:3a:76:d1:
+         e0:46:a9:e6:a5:11:73:a9:fc:7b:10:83:9a:78:fd:75:34:fa:
+         12:33:93:20:fb:64:a7:85:a6:72:da:0c:37:67:64:1e:f8:cf:
+         48:6d:34:94:81:2c:bc:4a:6a:c8:7d:9f:2a:e2:4c:6e:d7:fa:
+         81:cb:2f:3c:aa:6e:5b:e5:c7:5c:89:b4:db:02:91:b4:13:05:
+         ca:cb:eb:44:da:bf:58:da:5d:b1:eb:45:b6:db:d2:1c:37:47:
+         38:70:6b:99:92:b3:32:5f:18:6a:27:63:f5:bc:cf:8e:58:4f:
+         da:3b:0b:a6:71:cb:41:0c:04:a3:92:a4:5c:07:be:87:66:64:
+         9d:cc:43:25:33:e4:97:c4:bb:b2:22:8d:19:46:b7:ea:fa:5c:
+         23:6e:cf:1b:42:6a:9b:eb:45:42:eb:d3:85:ff:a5:eb:57:a8:
+         46:14:f0:38:94:17:19:fc:a8:72:e1:ca:d5:69:52:e9:08:19:
+         c8:11:92:af:7c:39:a1:aa:db:ff:b4:6b:a3:ee:4c:3a:17:ec:
+         36:52:93:87:72:41:62:9b:0d:ff:3b:5e:00:ec:8a:f9:41:60:
+         25:eb:30:a4
+-----BEGIN CERTIFICATE-----
+MIIFcjCCBFqgAwIBAgIBBDANBgkqhkiG9w0BAQsFADCBuDELMAkGA1UEBhMCVVMx
+CzAJBgNVBAgTAkNBMRUwEwYDVQQHEwxTYW5GcmFuY2lzY28xGjAYBgNVBAoTEVNG
+RUkgU3lzdGVtcyBJbmMuMRQwEgYDVQQLEwtTU0ktb3BlbnZwbjEdMBsGA1UEAxMU
+U0ZFSSBTeXN0ZW1zIEluYy4gQ0ExDzANBgNVBCkTBnNzaW9wczEjMCEGCSqGSIb3
+DQEJARYUc3VwZXItb3BzQHNzaW9wcy5vcmcwHhcNMTQwNzEwMTI1NjQwWhcNMjQw
+NzA3MTI1NjQwWjCBsjELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAkNBMRUwEwYDVQQH
+EwxTYW5GcmFuY2lzY28xGjAYBgNVBAoTEVNGRUkgU3lzdGVtcyBJbmMuMRYwFAYD
+VQQLEw1TU0kgU3VwZXItT1BTMRUwEwYDVQQDEwxmaWVsZHRyaXAuaW8xDzANBgNV
+BCkTBnNzaW9wczEjMCEGCSqGSIb3DQEJARYUc3VwZXItb3BzQHNzaW9wcy5vcmcw
+ggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9lnsO5yBh7/Nsqyp/I/e4
+/ZoQoS1xnhA6NDACoOOGTTYGpTHEZ156OqfHCXdVd2d19kN3dY3AnNJmdq58TQGV
+2y4Qf+eCOCdLdXPeWPp5AN466rf2gGf06nZOjQ38lC6HNrXcLh+Iqa4ZMI7a9Nqh
+V5tQzZ+3R0RUqzWvhDLFP/IxfGGgz2LiYpyrYda9VHeq8raVPZ3YHo9Fdt8N56Qg
+NKJrLAW9nQJ9A7Y11AmEwlvb5N8zdn+2nPsNomOLq1VIcLEoXtY7QzLyh1xgPM2f
+VvJgcAYwo5GF4OTqsVWjhtDsqMU1YrrIhNonLUV+SMd7i6ZKViJ9+Z1kjUZRgFKp
+AgMBAAGjggGJMIIBhTAJBgNVHRMEAjAAMBEGCWCGSAGG+EIBAQQEAwIGQDA0Bglg
+hkgBhvhCAQ0EJxYlRWFzeS1SU0EgR2VuZXJhdGVkIFNlcnZlciBDZXJ0aWZpY2F0
+ZTAdBgNVHQ4EFgQUMc1nUGyGztxA0HSOlJbiNcphbgUwge0GA1UdIwSB5TCB4oAU
+D19LJ1qWtDvDhgTl15fwbU6MTRahgb6kgbswgbgxCzAJBgNVBAYTAlVTMQswCQYD
+VQQIEwJDQTEVMBMGA1UEBxMMU2FuRnJhbmNpc2NvMRowGAYDVQQKExFTRkVJIFN5
+c3RlbXMgSW5jLjEUMBIGA1UECxMLU1NJLW9wZW52cG4xHTAbBgNVBAMTFFNGRUkg
+U3lzdGVtcyBJbmMuIENBMQ8wDQYDVQQpEwZzc2lvcHMxIzAhBgkqhkiG9w0BCQEW
+FHN1cGVyLW9wc0Bzc2lvcHMub3JnggkAzTpgPS+6ZqAwEwYDVR0lBAwwCgYIKwYB
+BQUHAwEwCwYDVR0PBAQDAgWgMA0GCSqGSIb3DQEBCwUAA4IBAQCOVpwyne28Hl7/
+U6DsLoyke7q3vKZhIrbTEOH8IbKK6Ik6dtHgRqnmpRFzqfx7EIOaeP11NPoSM5Mg
++2SnhaZy2gw3Z2Qe+M9IbTSUgSy8SmrIfZ8q4kxu1/qByy88qm5b5cdcibTbApG0
+EwXKy+tE2r9Y2l2x60W229IcN0c4cGuZkrMyXxhqJ2P1vM+OWE/aOwumcctBDASj
+kqRcB76HZmSdzEMlM+SXxLuyIo0ZRrfq+lwjbs8bQmqb60VC69OF/6XrV6hGFPA4
+lBcZ/Khy4crVaVLpCBnIEZKvfDmhqtv/tGuj7kw6F+w2UpOHckFimw3/O14A7Ir5
+QWAl6zCk
+-----END CERTIFICATE-----

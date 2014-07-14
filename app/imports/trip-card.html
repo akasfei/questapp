@@ -1,0 +1,77 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/notification-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html" >
+
+<polymer-element name="trip-card" attributes="title desc creator">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+      }
+      .card {
+        padding: 8px;
+        background: #fff;
+        box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+      }
+      paper-ripple {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      paper-icon-button {
+        z-index: 2;
+      }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 0 0 4px 0;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 0 8px 0;
+      }
+      .foot-note {
+        color: #bbb;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+    </style>
+    <div class="card" horizontal layout>
+      <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4"></paper-ripple>
+      <div flex>
+        <h1>{{title}}</h1>
+        <div class="details">
+          <span><core-icon icon="maps:place" size="16"></core-icon> Sector ZZ9 Plural Z Alpha</span>
+          <span><core-icon icon="schedule" size="16"></core-icon> 60 min</span>
+        </div>
+        <p class="desc">{{desc}}</p>
+        <p class="foot-note" horizontal layout>
+          <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{creator}}</span>
+          <span class="card-stars"><core-icon icon="star" size="16"></core-icon>10</span>
+          <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>3</span>
+        </p>
+      </div>
+      <div vertical layout>
+        <paper-icon-button icon="chevron-right" center center-justified></paper-icon-button>
+      </div>
+    </div>
+  </template>
+  <script>
+  Polymer({
+
+  });
+  </script>
+</polymer-element>

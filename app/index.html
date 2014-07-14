@@ -1,0 +1,178 @@
+﻿<!doctype html>
+<html>
+
+<head>
+  <title>unquote</title>
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+  <link rel="stylesheet" href="style/main.css">
+  <link rel="import" href="bower_components/font-roboto/roboto.html">
+  <link rel="import" href="bower_components/core-header-panel/core-header-panel.html">
+  <link rel="import" href="bower_components/core-toolbar/core-toolbar.html">
+  <link rel="import" href="bower_components/core-menu-button/core-menu-button.html">
+	<link rel="import" href="bower_components/core-item/core-item.html">
+  <link rel="import" href="bower_components/core-icons/core-icons.html" >
+  <link rel="import" href="bower_components/core-icons/iconsets/social-icons.html" >
+  <link rel="import" href="bower_components/core-drawer-panel/core-drawer-panel.html">
+  <link rel="import" href="bower_components/paper-tabs/paper-tabs.html">
+  <link rel="import" href="bower_components/paper-icon-button/paper-icon-button.html" >
+  <link rel="import" href="bower_components/paper-item/paper-item.html" >
+  <link rel="import" href="bower_components/paper-shadow/paper-shadow.html" >
+  <link rel="import" href="bower_components/paper-menu-button/paper-menu-button.html" >
+
+
+  <link rel="import" href="imports/post-list.html">
+  <link rel="import" href="imports/drawer-menu.html">
+  <link rel="import" href="imports/search-box.html">
+  <link rel="import" href="imports/trip-card.html">
+  <link rel="import" href="imports/map-container.html">
+  <style>
+  html,body {
+    height: 100%;
+    margin: 0;
+    background-color: #E5E5E5;
+    font-family: 'RobotoDraft', sans-serif;
+  }
+  core-header-panel {
+    height: 100%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  core-toolbar {
+    font-size: 14px;
+    background: #00c2ff;
+    color: white;
+  }
+  paper-checkbox {
+    padding: 20px 20px 20px 0;
+  }
+  .drawer {
+    background: #f0f0f0;
+    padding: 4px;
+  }
+  .drawer > core-item {
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    padding-left: 4px;
+    margin-bottom: 8px;
+  }
+  .drawer-main {
+    position: relative;
+    max-width: 100%;
+    padding: 8px;
+  }
+  #tabs {
+    width: 100%;
+    margin: 0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .container {
+    width: 100%;
+    margin: 8px 0;
+  }
+  #core-toolbar > :not(.background-ripple) {
+    z-index: 2;
+  }
+
+  core-toolbar > paper-input {
+    color: rgba(255,255,255,.75);
+    font-size: 16px;
+    border-color: #fff;
+  }
+
+  core-toolbar > paper-input /deep/ #errorContainer {
+    display: none;
+  }
+
+  core-toolbar > paper-input /deep/ #underline {
+    background-color: rgba(255,255,255,.75);
+  }
+
+  core-toolbar > paper-input /deep/ .focusedColor {
+    color: fff;
+    background: #fff;
+  }
+
+  core-toolbar > paper-input /deep/ input {
+    color: #fff;
+    margin-bottom: 0.2em;
+  }
+  .background-ripple {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+  .background-map {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+  }
+  @media (min-width: 641px) {
+    #tabs {
+      width: 400px;
+    }
+    .container {
+      width: 400px;
+    }
+    .drawer {
+      padding: 8px;
+    }
+    core-toolbar {
+      font-size: 18px;
+    }
+    #toolbar-menu-button {
+      display: none;
+    }
+  }
+  </style>
+</head>
+
+<body unresolved touch-action="auto">
+  <core-header-panel>
+    <core-toolbar id="core-toolbar">
+      <core-icon-button icon="menu" id="toolbar-menu-button" onclick="document.getElementById('drawer-panel').togglePanel();"></core-icon-button>
+      <paper-input label="Find a Quest..." flex></paper-input>
+      <core-icon-button icon="search"></core-icon-button>
+      <core-menu-button icon="more-vert" halign="right">
+        <core-item icon="social:share-alt" label="Share"><a href="#"></a></core-item>
+        <core-item icon="star-outline" label="Star"><a href="#"></a></core-item>
+      </core-menu-button>
+      <paper-ripple class="background-ripple"></paper-ripple>
+    </core-toolbar>
+    <br>
+    <div class="container" layout vertical center>
+      <core-drawer-panel id="drawer-panel">
+        <section drawer vertical layout class="drawer">
+          <drawer-menu></drawer-menu>
+        </section>
+        <section main class="drawer-main" vertical layout center>
+          <map-container class="background-map"></map-container>
+          <div class="container">
+            <trip-card title="Wow" desc="Such Material, Very Polymer" creator="Doge"></trip-card>
+          </div>
+        </section>
+      </core-drawer-panel>
+
+    </div>
+  </core-header-panel>
+
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-touch/angular-touch.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="bower_components/platform/platform.js"></script>
+  <!-- endbower -->
+</body>
+
+</html>
