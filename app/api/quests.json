@@ -4,20 +4,29 @@
     "desc": "Such Polymer, very ripple",
     "rate": 4,
     "creator": "SierraSix",
-    "duration": 60
+    "duration": "01:00:00",
+    "location": "Sector ZZ9 Plural Z Alpha",
+    "stars": "10",
+    "comments": "3"
   },
   {
     "title": "OK Google",
     "desc": "Show me things to do in Santa Cruz.",
     "rate": 5,
     "creator": "1e100",
-    "duration": 120
+    "duration": "00:30:00",
+    "location": "Santa Cruz",
+    "stars": "4",
+    "comments": "1"
   },
   {
     "title": "XMP Boom",
     "desc": "Resonator destroyed, good work.",
     "rate": 5,
     "creator": "NianticLabs",
-    "duration": 300
+    "duration": "05:00:00",
+    "location": "AS16-November-08",
+    "stars": "42",
+    "comments": "10"
   }
 ]

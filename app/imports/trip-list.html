@@ -1,0 +1,33 @@
+<link rel="import" href="trip-card.html">
+<link rel="import" href="trip-service.html">
+
+<polymer-element name="trip-list" attributes="query">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      .trip-container {
+        max-height: 220px;
+        overflow: scroll;
+      }
+      trip-card {
+        width: 100%;
+        margin-bottom: 8px;
+      }
+    </style>
+    <trip-service trips="{{trips}}"></trip-service>
+    <div class="trip-container">
+      <template repeat="{{trip in trips}}">
+        <trip-card name="{{trip.title}}" desc="{{trip.desc}}" creator="{{trip.creator}}"
+          location="{{trip.location}}" duration="{{trip.duration}}" stars="{{trip.stars}}"
+          comments="{{trip.comments}}"></trip-card>
+      </template>
+    </div>
+  </template>
+  <script>
+  Polymer('trip-list', {
+
+  });
+  </script>
+</polymer-element>
