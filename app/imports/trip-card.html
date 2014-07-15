@@ -21,10 +21,9 @@
         width: 100%;
         height: 100%;
       }
-      paper-fab {
+      paper-icon-button {
         float: right;
-        background-color: #fff;
-        z-index: 2;
+        z-index: 1;
       }
       h1 {
         color: #333;
@@ -55,7 +54,7 @@
     </style>
     <div class="card">
       <paper-shadow z="1"></paper-shadow>
-      <paper-fab class="mini" icon="chevron-right"></paper-fab>
+      <paper-icon-button icon="chevron-right"></paper-icon-button>
       <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4"></paper-ripple>
       <div flex>
         <h1>{{name}}</h1>
