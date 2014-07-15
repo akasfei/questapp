@@ -46,15 +46,7 @@
     padding: 20px 20px 20px 0;
   }
   .drawer {
-    background: #f0f0f0;
-    padding: 4px;
-  }
-  .drawer > core-item {
-    font-size: 16px;
-    color: #333;
-    background-color: #fff;
-    padding-left: 4px;
-    margin-bottom: 8px;
+    background: #fff;
   }
   .drawer-main {
     position: relative;
@@ -100,23 +92,7 @@
     color: #fff;
     margin-bottom: 0.2em;
   }
-  .background-ripple {
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-  }
-  .background-map {
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-  }
+
   @media (min-width: 641px) {
     #tabs {
       width: 400px;
@@ -139,7 +115,7 @@
 
 <body unresolved touch-action="auto">
   <core-header-panel>
-    <core-toolbar id="core-toolbar">
+    <core-toolbar id="core-toolbar" relative>
       <core-icon-button icon="menu" id="toolbar-menu-button" onclick="document.getElementById('drawer-panel').togglePanel();"></core-icon-button>
       <paper-input label="Find a Quest..." flex></paper-input>
       <core-icon-button icon="search"></core-icon-button>
@@ -147,7 +123,7 @@
         <core-item icon="social:share-alt" label="Share"><a href="#"></a></core-item>
         <core-item icon="star-outline" label="Star"><a href="#"></a></core-item>
       </core-menu-button>
-      <paper-ripple class="background-ripple"></paper-ripple>
+      <paper-ripple fit class="background-ripple"></paper-ripple>
     </core-toolbar>
     <br>
     <div class="container" layout vertical center>
@@ -155,17 +131,15 @@
         <section drawer vertical layout class="drawer">
           <drawer-menu></drawer-menu>
         </section>
-        <section main class="drawer-main" vertical layout center>
-          <map-container class="background-map"></map-container>
+        <section main class="drawer-main" vertical layout center relative>
+          <map-container class="background-map" fit></map-container>
           <div class="container">
             <trip-card title="Wow" desc="Such Material, Very Polymer" creator="Doge"></trip-card>
           </div>
         </section>
       </core-drawer-panel>
-
     </div>
   </core-header-panel>
-
   <!-- bower:js -->
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-animate/angular-animate.js"></script>
