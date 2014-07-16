@@ -1,0 +1,60 @@
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
+
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<polymer-element name="navigation-list">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #container,
+      .card {
+        padding: 8px;
+        margin: 0 8px 8px 8px;
+        background: #fff;
+      }
+      paper-icon-button {
+        margin-bottom: 4px;
+        background: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+    <core-animated-pages transitions="slide-from-right" selected="{{index}}">
+      <template repeat="{{node, nodeIndex in nodes}}">
+        <section>
+          <div class="card" horizontal layout center>
+            <paper-shadow z="1"></paper-shadow>
+            <paper-icon-button icon="{{nodeIndex == 0 ? 'close': 'chevron-left'}}" on-click="{{previous}}"></paper-icon-button>
+            <div flex horizontal layout center-justified>
+              <p>{{node.title}}</p>
+            </div>
+            <paper-icon-button icon="{{nodeIndex == nodes.length - 1 ? 'history': 'chevron-right'}}" on-click="{{next}}"></paper-icon-button>
+          </div>
+        </section>
+      </template>
+    </core-animated-pages>
+  </template>
+  <script>
+  Polymer('navigation-list', {
+    nodes: [
+      {title: 'Node 1'},
+      {title: 'Node 2'},
+      {title: 'Node 3'}
+    ],
+    index: 0,
+    previous: function () {
+      if (this.index <= 0)
+        this.fire('backward');
+      else
+        this.index -= 1;
+    },
+    next: function () {
+      if (this.index == this.nodes.length - 1)
+        this.index = 0;
+      else
+        this.index += 1;
+    }
+  });
+  </script>
+</polymer-element>
