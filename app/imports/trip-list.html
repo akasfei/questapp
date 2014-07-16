@@ -1,7 +1,7 @@
 <link rel="import" href="trip-card.html">
 <link rel="import" href="trip-service.html">
 
-<polymer-element name="trip-list" attributes="query">
+<polymer-element name="trip-list" attributes="show query">
   <template>
     <style>
       :host {
@@ -16,8 +16,8 @@
         margin-bottom: 8px;
       }
     </style>
-    <trip-service trips="{{trips}}"></trip-service>
-    <div class="trip-container">
+    <trip-service id="service" query="{{query}}" trips="{{trips}}"></trip-service>
+    <div class="trip-container" hidden?="{{!show}}">
       <template repeat="{{trip in trips}}">
         <trip-card name="{{trip.title}}" desc="{{trip.desc}}" creator="{{trip.creator}}"
           location="{{trip.location}}" duration="{{trip.duration}}" stars="{{trip.stars}}"
@@ -27,7 +27,9 @@
   </template>
   <script>
   Polymer('trip-list', {
-
+    refresh: function () {
+      return this.$.service.reload();
+    }
   });
   </script>
 </polymer-element>

@@ -5,9 +5,9 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html" >
 <link rel="import" href="../bower_components/core-icons/iconsets/social-icons.html" >
 <link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 <link rel="import" href="drawer-menu.html">
-<link rel="import" href="search-box.html">
 <link rel="import" href="trip-list.html">
 <link rel="import" href="map-container.html">
 
@@ -96,8 +96,8 @@
     <core-header-panel>
       <core-toolbar id="core-toolbar" relative>
         <core-icon-button icon="menu" id="toolbar-menu-button" on-click="{{toggleDrawer}}"></core-icon-button>
-        <paper-input label="Find a Quest..." flex></paper-input>
-        <core-icon-button icon="search"></core-icon-button>
+        <paper-input label="Find a Quest..." value="{{searchInput}}" flex></paper-input>
+        <core-icon-button icon="search" on-click="{{searchTrips}}"></core-icon-button>
         <core-menu-button icon="more-vert" halign="right">
           <core-item icon="social:share-alt" label="Share"><a href="#"></a></core-item>
           <core-item icon="star-outline" label="Star"><a href="#"></a></core-item>
@@ -113,7 +113,7 @@
           <section main class="drawer-main" vertical layout center relative>
             <map-container class="background-map" fit></map-container>
             <div class="container">
-              <trip-list></trip-list>
+              <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}"></trip-list>
             </div>
           </section>
         </core-drawer-panel>
@@ -125,8 +125,14 @@
       toggleDrawer: function () {
         this.opened = !this.opened;
       },
+      searchTrips: function () {
+        this.showTripList = true;
+        this.$.tripList.refresh();
+        console.log(this.searchInput);
+      },
       ready: function () {
         this.opened = false;
+        this.showTripList = false;
       }
     });
   </script>

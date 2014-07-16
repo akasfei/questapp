@@ -47,7 +47,7 @@
   @type Array
   @default []
 -->
-<polymer-element name="trip-service" attributes="trips">
+<polymer-element name="trip-service" attributes="query trips">
   <template>
     <style>
     :host {
@@ -57,6 +57,7 @@
     <core-ajax id="ajax"
       auto
       url="../api/quests.json"
+      params="{{}}"
       on-core-response="{{tripsLoaded}}"
       handleAs="json">
     </core-ajax>
@@ -64,11 +65,23 @@
   <script>
   Polymer('trip-service', {
     created: function() {
-      this.posts = [];
+      this.trips = [];
+    },
+    reload: function() {
+      this.$.ajax.go();
     },
     tripsLoaded: function() {
       // Make a copy of the loaded data
-      this.trips = this.$.ajax.response.slice(0);
+      var trips = this.$.ajax.response.slice(0);
+      if (this.query && this.query.length > 0) {
+        this.trips = [];
+        var q = new RegExp(this.query)
+        for (var i = 0; i < trips.length; i++) {
+          if (q.test(trips[i].title))
+            this.trips.push(trips[i]);
+        }
+      } else
+        this.trips = trips;
     }
   });
   </script>
