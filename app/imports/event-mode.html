@@ -9,9 +9,6 @@
     <style>
       :host {
         display: block;
-        margin: 8px;
-        padding: 8px;
-        background: #fff;
       }
     </style>
     <core-ajax id="ajax"
@@ -20,7 +17,6 @@
       on-core-response="{{eventsLoaded}}"
       handleAs="json">
     </core-ajax>
-    <paper-shadow z="1"></paper-shadow>
     <template repeat="{{e in events}}">
       <event-card name="{{e.title}}" desc="{{e.desc}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}"></event-card>
     </template>

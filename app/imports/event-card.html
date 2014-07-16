@@ -10,9 +10,12 @@
     <style>
       :host {
         display: block;
+      }
+      #container {
         position: relative;
-        border-bottom: 1px solid #ccc;
-        margin-bottom: 4px;
+        padding: 8px;
+        margin: 0 8px 8px 8px;
+        background: #fff;
       }
       h1 {
         color: #444;
@@ -32,16 +35,19 @@
         z-index: 2;
       }
     </style>
-    <div>
+    <div id="container">
+      <paper-shadow z="1"></paper-shadow>
       <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" fit></paper-ripple>
-      <paper-icon-button icon="maps:place"></paper-icon-button>
+      <paper-icon-button icon="maps:place" on-click="{{fireEventSelected}}"></paper-icon-button>
       <h1>{{name}}</h1>
       <p>{{desc}}</p>
     </div>
   </template>
   <script>
   Polymer('event-card', {
-
+    fireEventSelected: function () {
+      this.fire('event-selected', {name: this.name});
+    }
   });
   </script>
 </polymer-element>

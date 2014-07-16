@@ -39,7 +39,6 @@
       .drawer-main {
         position: relative;
         max-width: 100%;
-        padding: 8px;
       }
       #tabs {
         width: 100%;
@@ -118,12 +117,17 @@
           </section>
           <section main class="drawer-main" vertical layout center relative>
             <map-container class="background-map" fit></map-container>
-            <core-animated-pages id="cardPages" class="container" transitions="slide-from-right hero-transition cross-fade" selected="{{cardPageSelected}}">
+            <core-animated-pages id="cardPages" class="container" transitions="slide-from-right hero-transition cross-fade" selected="{{cardPageSelected}}" on-backward="{{animationBackward}}" on-forward="{{animationForward}}">
               <section slide-from-right>
                 <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}" on-trip-selected="{{tripSelected}}" ></trip-list>
               </section>
               <section slide-from-right>
-                <event-list id="eventList" tripName="{{tripName}}" on-backward="{{animationBackward}}"></event-list>
+                <event-list id="eventList" tripName="{{tripName}}" on-event-selected="{{eventSelected}}"></event-list>
+              </section>
+              <section slide-from-right>
+                <navigation-list id="navigationList">
+
+                </navigation-list>
               </section>
             </core-animated-pages>
           </section>
@@ -148,6 +152,9 @@
       },
       tripSelected: function (e, d, s) {
         this.tripName = d.title;
+        this.animationForward();
+      },
+      eventSelected: function (e, d, s) {
         this.animationForward();
       },
       animationForward: function (e, d, s) {
