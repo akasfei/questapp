@@ -1,0 +1,74 @@
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html">
+
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="event-mode.html">
+
+<polymer-element name="event-list" attributes="tripName mapsApi">
+  <template>
+    <style>
+      :host {
+        display: block;
+        background: #fff;
+      }
+      #container {
+        position: relative;
+        background: #fff;
+      }
+      paper-tabs {
+        color: #00c2ff;
+      }
+      paper-tabs::shadow #selectionBar {
+        background-color: #00c2ff;
+      }
+      paper-tabs paper-tab::shadow #ink {
+        color: #4cd4ff;
+      }
+      h1 {
+        display: inline-block;
+        color: #444;
+        font-size: 20px;
+        line-height: 36px;
+        margin: 0;
+      }
+      .card {
+        display: block;
+        height: auto;
+        margin: 8px;
+        padding: 8px 4px;
+        background: #fff;
+      }
+    </style>
+    <div id="container">
+      <section layout horizontal>
+        <paper-shadow z="1"></paper-shadow>
+        <paper-icon-button icon="chevron-left" on-click="{{fireBackward}}"></paper-icon-button>
+        <h1 flex>{{tripName}}</h1>
+      </section>
+      <section>
+        <core-animated-pages selected="{{selected}}" transitions="slide-from-right">
+          <template repeat="{{mode in modes}}">
+            <div>
+              <event-mode mode="{{mode}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}"></event-mode>
+            </div>
+          </template>
+        </core-animated-pages>
+      </section>
+    </div>
+  </template>
+  <script>
+  Polymer('event-list', {
+    ready: function () {
+      this.selected = 0;
+      this.modes = ['walk', 'car', 'transit'];
+    },
+    fireBackward: function () {
+      this.fire('backward');
+    }
+  });
+  </script>
+</polymer-element>

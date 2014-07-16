@@ -54,10 +54,10 @@
     </style>
     <div class="card">
       <paper-shadow z="1"></paper-shadow>
-      <paper-icon-button icon="chevron-right"></paper-icon-button>
+      <paper-icon-button id="viewEvents" icon="chevron-right" on-click="{{openEventList}}"></paper-icon-button>
       <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4"></paper-ripple>
       <div flex>
-        <h1>{{name}}</h1>
+        <h1 hero-id="trip-card-name">{{name}}</h1>
         <div class="details">
           <span><core-icon icon="maps:place" size="16"></core-icon> {{location}}</span>
           <span><core-icon icon="schedule" size="16"></core-icon> ~{{durationFormatted}}</span>
@@ -83,6 +83,9 @@
         this.durationFormatted = format.getSeconds() + ' sec';
       else
         this.durationFormatted = 'UNKNOWN';
+    },
+    openEventList: function () {
+      this.fire('trip-selected', {title: this.name});
     }
   });
   </script>
