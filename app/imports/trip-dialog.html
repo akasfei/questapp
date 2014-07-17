@@ -1,0 +1,105 @@
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html" >
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog-transition.html" >
+
+<polymer-element name="trip-dialog" attributes="trip">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+      }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 0 0 4px 0;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .foot-note {
+        color: #bbb;
+        font-size: 12px;
+        line-height: 16px;
+        border-top: 1px solid #ccc;
+        padding-top: 2px;
+        margin: 0;
+      }
+      .foot-note > span {
+        margin-right: 4px;
+      }
+      paper-dialog {
+        top: 80px;
+      }
+      paper-dialog > section {
+        padding-top: 8px;
+        width: 100%;
+      }
+      paper-dialog > section > img {
+        max-width: 100%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      paper-dialog /deep/ #main {
+        padding: 8px;
+      }
+      paper-dialog /deep/ #main > h1 {
+        font-size: 22px;
+        line-height: 32px;
+      }
+      .comment {
+        padding 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #ccc;
+      }
+      .comment > h1 {
+        color: #333;
+        font-size: 16px;
+        line-height: 22px;
+        margin: 0 0 4px 0;
+      }
+      .comment > .content {
+        font-size: 14px;
+        line-height: 20px;
+        margin: 0 0 4px 0;
+      }
+      .comment > .foot-note {
+        border: none;
+      }
+    </style>
+    <paper-dialog id="detailsDialog" heading="{{trip.name}}" transition="paper-dialog-transition-center" touch-action="pan-y">
+      <section>
+        <img src="{{'images/trip-image-default-' + trip.index % 3 + '.jpg'}}" alt="">
+        <template repeat="{{c in trip.comments}}">
+          <div class="comment">
+            <h1>{{c.trip_comment_title}}</h1>
+            <p class="content">{{c.trip_comment_content}}</p>
+            <p class="foot-note" horizontal layout>
+              <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{c.trip_comment_uploader_id}}</span>
+              <span class="card-stars"><core-icon icon="thumb-up" size="16"></core-icon>{{c.trip_comment_liked}}</span>
+              <span class="card-stars"><core-icon icon="thumb-down" size="16"></core-icon>{{c.trip_comment_disliked}}</span>
+            </p>
+          </div>
+        </template>
+      </section>
+      <paper-button label="Close" affirmative autofocus></paper-button>
+    </paper-dialog>
+  </template>
+  <script>
+  Polymer('trip-dialog', {
+    toggle: function () {
+      this.$.detailsDialog.toggle();
+    }
+  });
+  </script>
+</polymer-element>

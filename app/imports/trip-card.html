@@ -3,7 +3,7 @@
 <link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html" >
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html" >
 
-<polymer-element name="trip-card" attributes="name desc creator location duration stars comments query">
+<polymer-element name="trip-card" attributes="name desc creator location duration stars comments query index key">
   <template>
     <style>
       :host {
@@ -51,11 +51,53 @@
         padding-top: 2px;
         margin: 0;
       }
+      .foot-note > span {
+        margin-right: 4px;
+      }
+      paper-dialog {
+        top: 80px;
+      }
+      paper-dialog > section {
+        padding-top: 8px;
+        width: 100%;
+      }
+      paper-dialog > section > img {
+        max-width: 100%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      paper-dialog /deep/ #main {
+        padding: 8px;
+      }
+      paper-dialog /deep/ #main > h1 {
+        font-size: 22px;
+        line-height: 32px;
+      }
+      .comment {
+        padding 8px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #ccc;
+      }
+      .comment > h1 {
+        color: #333;
+        font-size: 16px;
+        line-height: 22px;
+        margin: 0 0 4px 0;
+      }
+      .comment > .content {
+        font-size: 14px;
+        line-height: 20px;
+        margin: 0 0 4px 0;
+      }
+      .comment > .foot-note {
+        border: none;
+      }
     </style>
     <div class="card">
       <paper-shadow z="1"></paper-shadow>
       <paper-icon-button id="viewEvents" icon="chevron-right" on-click="{{openEventList}}"></paper-icon-button>
-      <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4"></paper-ripple>
+      <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{toggleDetails}}"></paper-ripple>
       <div flex>
         <h1>{{name}}</h1>
         <div class="details">
@@ -66,7 +108,7 @@
         <p class="foot-note" horizontal layout>
           <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{creator}}</span>
           <span class="card-stars"><core-icon icon="star" size="16"></core-icon>{{stars}}</span>
-          <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{comments}}</span>
+          <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{comments.length}}</span>
         </p>
       </div>
     </div>
@@ -81,11 +123,16 @@
         this.durationFormatted = format.getMinutes() + ' min';
       else if (format.getSeconds() > 0)
         this.durationFormatted = format.getSeconds() + ' sec';
+      else if (this.duration.search(/^24/) >= 0)
+        this.durationFormatted = '1 day';
       else
         this.durationFormatted = 'UNKNOWN';
     },
     openEventList: function () {
       this.fire('trip-selected', this);
+    },
+    toggleDetails: function () {
+      this.fire('show-trip-dialog', this);
     }
   });
   </script>

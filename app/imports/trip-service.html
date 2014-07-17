@@ -55,8 +55,7 @@
     }
     </style>
     <core-ajax id="ajax"
-      auto
-      url="../api/quests.json"
+      url="../api/api-trips.json"
       params="{{}}"
       on-core-response="{{tripsLoaded}}"
       handleAs="json">
@@ -82,6 +81,7 @@
         }
       } else
         this.trips = trips;
+      this.fire('search-complete');
     }
   });
   </script>

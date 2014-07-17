@@ -20,6 +20,7 @@
 <link rel="import" href="event-list.html">
 <link rel="import" href="navigation-list.html">
 <link rel="import" href="map-container.html">
+<link rel="import" href="trip-dialog.html">
 
 <polymer-element name="quest-app">
   <template>
@@ -132,15 +133,16 @@
 
               </section>
               <section>
-                <trip-list id="tripList" show="true" query="{{searchInput}}" on-trip-selected="{{tripSelected}}" slide-from-right cross-fade></trip-list>
+                <trip-list id="tripList" show="true" query="{{searchInput}}" on-trip-selected="{{tripSelected}}" on-search-complete="{{searchComplete}}" on-show-trip-dialog="{{showTripDialog}}" slide-from-right cross-fade></trip-list>
               </section>
               <section>
-                <event-list id="eventList" trip="{{trip}}" on-event-selected="{{eventSelected}}" slide-from-right cross-fade></event-list>
+                <event-list id="eventList" trip="{{trip}}" on-event-selected="{{eventSelected}}" on-events-loaded="{{eventsLoaded}}" slide-from-right cross-fade></event-list>
               </section>
               <section>
                 <navigation-list id="navigationList" slide-from-right cross-fade></navigation-list>
               </section>
             </core-animated-pages>
+            <trip-dialog id="tripDialog"></trip-dialog>
           </section>
         </core-drawer-panel>
       </div>
@@ -176,15 +178,20 @@
       searchTrips: function () {
         this.showTripList = true;
         this.$.tripList.refresh();
+      },
+      searchComplete: function () {
         this.cardPageSelected = 1;
-        console.log(this.searchInput);
       },
       tripSelected: function (e, d, s) {
         this.trip = d;
+        this.$.eventList.loadEvents();
+      },
+      eventsLoaded: function () {
         this.animationForward();
       },
       eventSelected: function (e, d, s) {
         this.$.navigationList.index = d.index;
+        this.$.navigationList.nodes = this.$.eventList.$.eventMode.events;
         this.animationForward();
       },
       animationForward: function (e, d, s) {
@@ -193,6 +200,10 @@
       animationBackward: function (e, d, s) {
         if (this.cardPageSelected == 0) return;
         this.cardPageSelected -= 1;
+      },
+      showTripDialog: function (e, d, s) {
+        this.$.tripDialog.trip = d;
+        this.$.tripDialog.toggle();
       }
     });
   </script>

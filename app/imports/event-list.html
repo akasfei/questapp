@@ -67,7 +67,7 @@
             <p class="foot-note" horizontal layout>
               <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{trip.creator}}</span>
               <span class="card-stars"><core-icon icon="star" size="16"></core-icon>{{trip.stars}}</span>
-              <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{trip.comments}}</span>
+              <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{trip.comments.length}}</span>
             </p>
           </div>
           <div vertical layout center-justified>
@@ -75,7 +75,7 @@
           </div>
         </section>
       </div>
-      <event-mode tripName="{{trip.name}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}"></event-mode>
+      <event-mode id="eventMode" key="{{trip.key}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}"></event-mode>
     </div>
   </template>
   <script>
@@ -90,6 +90,9 @@
     },
     fireForward: function() {
       this.fire('forward');
+    },
+    loadEvents: function () {
+      this.$.eventMode.load();
     }
   });
   </script>
