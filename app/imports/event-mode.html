@@ -1,0 +1,34 @@
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+
+<link rel="import" href="event-card.html">
+
+<polymer-element name="event-mode" attributes="tripName mapsApi mode">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <core-ajax id="ajax"
+      auto
+      url="../api/event-test.json"
+      on-core-response="{{eventsLoaded}}"
+      handleAs="json">
+    </core-ajax>
+    <template repeat="{{e in events}}">
+      <event-card name="{{e.title}}" desc="{{e.desc}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}"></event-card>
+    </template>
+  </template>
+  <script>
+  Polymer('event-mode', {
+    ready: function () {
+      this.events = []
+    },
+    eventsLoaded: function () {
+      this.events = this.$.ajax.response.slice(0);
+    }
+  });
+  </script>
+</polymer-element>

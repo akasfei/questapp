@@ -5,10 +5,17 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html" >
 <link rel="import" href="../bower_components/core-icons/iconsets/social-icons.html" >
 <link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-bottom.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/cross-fade.html">
+
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 
 <link rel="import" href="drawer-menu.html">
 <link rel="import" href="trip-list.html">
+<link rel="import" href="event-list.html">
+<link rel="import" href="navigation-list.html">
 <link rel="import" href="map-container.html">
 
 <polymer-element name="quest-app">
@@ -33,7 +40,6 @@
       .drawer-main {
         position: relative;
         max-width: 100%;
-        padding: 8px;
       }
       #tabs {
         width: 100%;
@@ -112,9 +118,17 @@
           </section>
           <section main class="drawer-main" vertical layout center relative>
             <map-container class="background-map" fit></map-container>
-            <div class="container">
-              <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}"></trip-list>
-            </div>
+            <core-animated-pages id="cardPages" class="container" transitions="slide-from-right" selected="{{cardPageSelected}}" on-backward="{{animationBackward}}" on-forward="{{animationForward}}">
+              <section>
+                <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}" on-trip-selected="{{tripSelected}}"></trip-list>
+              </section>
+              <section>
+                <event-list id="eventList" tripName="{{tripName}}" on-event-selected="{{eventSelected}}"></event-list>
+              </section>
+              <section>
+                <navigation-list id="navigationList" flex></navigation-list>
+              </section>
+            </core-animated-pages>
           </section>
         </core-drawer-panel>
       </div>
@@ -122,6 +136,11 @@
   </template>
   <script>
     Polymer('quest-app', {
+      ready: function () {
+        this.opened = false;
+        this.showTripList = false;
+        this.cardPageSelected = 0;
+      },
       toggleDrawer: function () {
         this.opened = !this.opened;
       },
@@ -130,9 +149,19 @@
         this.$.tripList.refresh();
         console.log(this.searchInput);
       },
-      ready: function () {
-        this.opened = false;
-        this.showTripList = false;
+      tripSelected: function (e, d, s) {
+        this.tripName = d.title;
+        this.animationForward();
+      },
+      eventSelected: function (e, d, s) {
+        this.animationForward();
+      },
+      animationForward: function (e, d, s) {
+        this.cardPageSelected += 1;
+      },
+      animationBackward: function (e, d, s) {
+        if (this.cardPageSelected == 0) return;
+        this.cardPageSelected -= 1;
       }
     });
   </script>
