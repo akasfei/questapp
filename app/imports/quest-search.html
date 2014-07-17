@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-menu-button/core-menu-button.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/social-icons.html" >
+<link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-tab/paper-tab.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
+
+<link rel="import" href="drawer-menu.html">
+<link rel="import" href="trip-list.html">
+<link rel="import" href="map-container.html">
+
+<polymer-element name="quest-search">
+  <template>
+    <style>
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      core-toolbar {
+        font-size: 14px;
+        background: #00c2ff;
+        color: white;
+      }
+      paper-checkbox {
+        padding: 20px 20px 20px 0;
+      }
+
+      paper-tabs{
+        height:100%;
+      }
+
+      paper-tab:not(.core-selected) .tab-content {
+        opacity: 0.95;
+      }
+      paper-tab{
+        color:#fff;
+        font-size: 15px;
+      }
+
+      paper-input #underline {
+        height: 2px;
+      }
+      #core-toolbar > :not(.background-ripple) {
+        z-index: 2;
+      }
+
+      .container {
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        left: 0px;
+        right: 0px;
+        height: 70px;
+        margin:auto;
+      }
+      .container>div{
+        height:60px;
+      }
+
+
+      @media (min-width: 641px) {
+        #tabs {
+          width: 400px;
+        }
+        .container {
+          width: 400px;
+        }
+        .drawer {
+          padding: 8px;
+        }
+        core-toolbar {
+          font-size: 18px;
+        }
+        #toolbar-menu-button {
+          display: none;
+        }
+      }
+    </style>
+    <core-header-panel>
+      <core-toolbar id="core-toolbar" relative>
+        <paper-tabs class="fit">
+            <paper-tab flex class="search-header-tab">推荐</paper-tab>
+            <paper-tab flex class="search-header-tab">附近</paper-tab>
+            <paper-tab flex class="search-header-tab">收藏</paper-tab>
+        </paper-tabs>
+      </core-toolbar>
+      <br>
+      <div class="container"  vertical layout center flex>
+        <div horizontal layout flex>
+          <paper-input label="Find a Quest..." value="{{searchInput}}" flex></paper-input>
+          <core-icon-button icon="search" on-click="{{searchInputChanged}}" ></core-icon-button>
+        </div>
+      </div>
+    </core-header-panel>
+  </template>
+  <script>
+    Polymer('quest-search', {
+      ready: function () {
+      },
+      searchInputChanged:function(){
+        if(this.searchInput !== ""){
+          this.style.display = "none";
+          document.querySelector("body").impl.appendChild(document.createElement("quest-app"))
+        }
+        console.log(this.searchInput);
+      }
+    });
+  </script>
+</polymer-element>
