@@ -17,8 +17,8 @@
       on-core-response="{{eventsLoaded}}"
       handleAs="json">
     </core-ajax>
-    <template repeat="{{e in events}}">
-      <event-card name="{{e.title}}" desc="{{e.desc}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}"></event-card>
+    <template repeat="{{e, eIndex in events}}">
+      <event-card name="{{e.title}}" desc="{{e.desc}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
     </template>
   </template>
   <script>

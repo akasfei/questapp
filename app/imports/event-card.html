@@ -5,7 +5,7 @@
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 
 
-<polymer-element name="event-card" attributes="tripName mapsApi name desc">
+<polymer-element name="event-card" attributes="tripName mapsApi name desc index">
   <template>
     <style>
       :host {
@@ -46,7 +46,7 @@
   <script>
   Polymer('event-card', {
     fireEventSelected: function () {
-      this.fire('event-selected', {name: this.name});
+      this.fire('event-selected', {index: this.index});
     }
   });
   </script>

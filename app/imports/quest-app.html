@@ -11,6 +11,9 @@
 <link rel="import" href="../bower_components/core-animated-pages/transitions/cross-fade.html">
 
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
 
 <link rel="import" href="drawer-menu.html">
 <link rel="import" href="trip-list.html">
@@ -53,9 +56,6 @@
         width: 100%;
         margin: 8px 0;
       }
-      #core-toolbar > :not(.background-ripple) {
-        z-index: 2;
-      }
 
       core-toolbar > paper-input {
         color: rgba(255,255,255,.75);
@@ -81,6 +81,14 @@
         margin-bottom: 0.2em;
       }
 
+      paper-menu-button > paper-item {
+        color: #333;
+      }
+
+      paper-menu-button /deep/ paper-menu-button-overlay-container {
+        top: 56px !important;
+      }
+
       @media (min-width: 641px) {
         #tabs {
           width: 400px;
@@ -101,14 +109,15 @@
     </style>
     <core-header-panel>
       <core-toolbar id="core-toolbar" relative>
-        <core-icon-button icon="menu" id="toolbar-menu-button" on-click="{{toggleDrawer}}"></core-icon-button>
+        <paper-icon-button icon="menu" id="toolbar-menu-button" on-click="{{toggleDrawer}}"></paper-icon-button>
         <paper-input label="Find a Quest..." value="{{searchInput}}" flex></paper-input>
-        <core-icon-button icon="search" on-click="{{searchTrips}}"></core-icon-button>
-        <core-menu-button icon="more-vert" halign="right">
-          <core-item icon="social:share-alt" label="Share"><a href="#"></a></core-item>
-          <core-item icon="star-outline" label="Star"><a href="#"></a></core-item>
-        </core-menu-button>
-        <paper-ripple fit class="background-ripple"></paper-ripple>
+        <paper-icon-button icon="search" on-click="{{searchTrips}}"></paper-icon-button>
+        <paper-menu-button icon="more-vert" halign="right">
+          <paper-item id="activateFullScreen"><core-icon icon="fullscreen"></core-icon> Full Screen</paper-item>
+          <paper-item><core-icon icon="social:share-alt"></core-icon> Share</paper-item>
+          <paper-item><core-icon icon="star-outline"></core-icon> Star</paper-item>
+        </paper-menu-button>
+        <!-- <paper-ripple fit class="background-ripple"></paper-ripple> -->
       </core-toolbar>
       <br>
       <div class="container" layout vertical center>
@@ -123,7 +132,7 @@
                 <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}" on-trip-selected="{{tripSelected}}"></trip-list>
               </section>
               <section>
-                <event-list id="eventList" tripName="{{tripName}}" on-event-selected="{{eventSelected}}"></event-list>
+                <event-list id="eventList" trip="{{trip}}" on-event-selected="{{eventSelected}}"></event-list>
               </section>
               <section>
                 <navigation-list id="navigationList" flex></navigation-list>
@@ -136,10 +145,27 @@
   </template>
   <script>
     Polymer('quest-app', {
+      fullScreen: false,
       ready: function () {
         this.opened = false;
         this.showTripList = false;
         this.cardPageSelected = 0;
+        this.$.activateFullScreen.addEventListener('click', function () {
+          if (this.fullScreen) {
+            (
+              document.exitFullscreen ||
+              document.mozExitFullscreen ||
+              document.webkitExitFullscreen
+            ).call(document);
+          } else {
+            (
+              document.documentElement.requestFullScreen ||
+              document.documentElement.mozRequestFullScreen ||
+              document.documentElement.webkitRequestFullScreen
+            ).call(document.documentElement);
+          }
+          this.fullScreen = !this.fullScreen;
+        });
       },
       toggleDrawer: function () {
         this.opened = !this.opened;
@@ -150,10 +176,11 @@
         console.log(this.searchInput);
       },
       tripSelected: function (e, d, s) {
-        this.tripName = d.title;
+        this.trip = d;
         this.animationForward();
       },
       eventSelected: function (e, d, s) {
+        this.$.navigationList.index = d.index;
         this.animationForward();
       },
       animationForward: function (e, d, s) {

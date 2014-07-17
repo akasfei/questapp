@@ -1,7 +1,10 @@
 <link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
 <link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html">
 
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 
 <polymer-element name="navigation-list">
   <template>
@@ -16,18 +19,44 @@
         background: #fff;
       }
       paper-icon-button {
-        margin-bottom: 4px;
         background: rgba(255, 255, 255, 0.5);
       }
+      .node-title {
+        margin: 4px 0 4px 0;
+      }
+
+      .card.directions {
+        padding: 0;
+      }
+      paper-tabs {
+        width: 100%;
+        height: 36px;
+        color: #333;
+      }
+      paper-tabs::shadow #selectionBar {
+        height: 4px;
+        background-color: #00c2ff;
+      }
+      paper-tabs paper-tab::shadow #ink {
+        color: #00c2ff;
+      }
     </style>
+    <div class="card directions">
+      <paper-shadow z="2"></paper-shadow>
+      <paper-tabs selected="{{directionMode}}">
+        <paper-tab><core-icon icon="maps:directionswalk" size="16"></core-icon></paper-tab>
+        <paper-tab><core-icon icon="maps:directions-car" size="16"></core-icon></paper-tab>
+        <paper-tab><core-icon icon="maps:directions-transit" size="16"></core-icon></paper-tab>
+      </paper-tabs>
+    </div>
     <core-animated-pages transitions="slide-from-right" selected="{{index}}">
       <template repeat="{{node, nodeIndex in nodes}}">
         <section>
           <div class="card" horizontal layout center>
             <paper-shadow z="1"></paper-shadow>
             <paper-icon-button icon="{{nodeIndex == 0 ? 'close': 'chevron-left'}}" on-click="{{previous}}"></paper-icon-button>
-            <div flex horizontal layout center-justified>
-              <p>{{node.title}}</p>
+            <div flex vertical layout center>
+              <p class="node-title">{{node.title}}</p>
             </div>
             <paper-icon-button icon="{{nodeIndex == nodes.length - 1 ? 'history': 'chevron-right'}}" on-click="{{next}}"></paper-icon-button>
           </div>
@@ -43,6 +72,7 @@
       {title: 'Node 3'}
     ],
     index: 0,
+    directionMode: 0,
     previous: function () {
       if (this.index <= 0)
         this.fire('backward');
