@@ -8,7 +8,7 @@
 
 <link rel="import" href="event-mode.html">
 
-<polymer-element name="event-list" attributes="tripName mapsApi">
+<polymer-element name="event-list" attributes="trip mapsApi">
   <template>
     <style>
       :host {
@@ -44,16 +44,38 @@
         display: block;
         background-color: #fff;
       }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .foot-note {
+        color: #bbb;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 0;
+      }
     </style>
     <div vertical layout>
       <div id="container">
         <paper-shadow z="1"></paper-shadow>
         <section layout horizontal>
-          <paper-icon-button icon="chevron-left" on-click="{{fireBackward}}"></paper-icon-button>
-          <h1 flex>{{tripName}}</h1>
+          <div flex>
+            <h1 flex>{{trip.name}}</h1>
+            <p class="desc">{{trip.desc}}</p>
+            <p class="foot-note" horizontal layout>
+              <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{trip.creator}}</span>
+              <span class="card-stars"><core-icon icon="star" size="16"></core-icon>{{trip.stars}}</span>
+              <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{trip.comments}}</span>
+            </p>
+          </div>
+          <div vertical layout center-justified>
+            <paper-icon-button icon="close" on-click="{{fireBackward}}"></paper-icon-button>
+          </div>
         </section>
       </div>
-      <event-mode tripName="{{tripName}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}"></event-mode>
+      <event-mode tripName="{{trip.name}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}"></event-mode>
     </div>
   </template>
   <script>

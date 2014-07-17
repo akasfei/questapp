@@ -123,7 +123,7 @@
                 <trip-list id="tripList" show="{{showTripList}}" query="{{searchInput}}" on-trip-selected="{{tripSelected}}"></trip-list>
               </section>
               <section>
-                <event-list id="eventList" tripName="{{tripName}}" on-event-selected="{{eventSelected}}"></event-list>
+                <event-list id="eventList" trip="{{trip}}" on-event-selected="{{eventSelected}}"></event-list>
               </section>
               <section>
                 <navigation-list id="navigationList" flex></navigation-list>
@@ -150,10 +150,11 @@
         console.log(this.searchInput);
       },
       tripSelected: function (e, d, s) {
-        this.tripName = d.title;
+        this.trip = d;
         this.animationForward();
       },
       eventSelected: function (e, d, s) {
+        this.$.navigationList.index = d.index;
         this.animationForward();
       },
       animationForward: function (e, d, s) {
