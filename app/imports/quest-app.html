@@ -105,8 +105,9 @@
         <paper-input label="Find a Quest..." value="{{searchInput}}" flex></paper-input>
         <core-icon-button icon="search" on-click="{{searchTrips}}"></core-icon-button>
         <core-menu-button icon="more-vert" halign="right">
-          <core-item icon="social:share-alt" label="Share"><a href="#"></a></core-item>
-          <core-item icon="star-outline" label="Star"><a href="#"></a></core-item>
+          <core-item id="activateFullScreen" icon="fullscreen" label="Full Screen"><a href="javascript:void(0)"></a></core-item>
+          <core-item icon="social:share-alt" label="Share"><a href="javascript:void(0)"></a></core-item>
+          <core-item icon="star-outline" label="Star"><a href="javascript:void(0)"></a></core-item>
         </core-menu-button>
         <paper-ripple fit class="background-ripple"></paper-ripple>
       </core-toolbar>
@@ -136,10 +137,27 @@
   </template>
   <script>
     Polymer('quest-app', {
+      fullScreen: false,
       ready: function () {
         this.opened = false;
         this.showTripList = false;
         this.cardPageSelected = 0;
+        this.$.activateFullScreen.addEventListener('click', function () {
+          if (this.fullScreen) {
+            (
+              document.exitFullscreen ||
+              document.mozExitFullscreen ||
+              document.webkitExitFullscreen
+            ).call(document);
+          } else {
+            (
+              document.documentElement.requestFullScreen ||
+              document.documentElement.mozRequestFullScreen ||
+              document.documentElement.webkitRequestFullScreen
+            ).call(document.documentElement);
+          }
+          this.fullScreen = !this.fullScreen;
+        });
       },
       toggleDrawer: function () {
         this.opened = !this.opened;
