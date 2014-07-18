@@ -6,7 +6,7 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 
-<polymer-element name="navigation-list">
+<polymer-element name="navigation-list" attributes="mapsApi">
   <template>
     <style>
       :host {
@@ -71,15 +71,29 @@
     directionMode: 0,
     previous: function () {
       if (this.index <= 0)
-        this.fire('backward');
+        return this.fire('backward');
       else
         this.index -= 1;
+      if (this.mapsApi) {
+        this.mapsApi.moveTo({
+          latitude: this.nodes[this.index].event_from_latitude,
+          longitude: this.nodes[this.index].event_form_dimention,
+          title: this.nodes[this.index].event_name
+        });
+      }
     },
     next: function () {
       if (this.index == this.nodes.length - 1)
         this.index = 0;
       else
         this.index += 1;
+      if (this.mapsApi) {
+        this.mapsApi.moveTo({
+          latitude: this.nodes[this.index].event_from_latitude,
+          longitude: this.nodes[this.index].event_form_dimention,
+          title: this.nodes[this.index].event_name
+        });
+      }
     },
     close: function () {
       this.fire('backward');

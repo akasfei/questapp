@@ -30,6 +30,19 @@
     },
     eventsLoaded: function () {
       this.events = this.$.ajax.response.trip_event;
+      if (this.mapsApi) {
+        this.mapsApi.removeDirections();
+        // this.mapsApi.showCurrentLocation();
+        var direction = [this.mapsApi.currentLocation];
+        for (var i = 0; i < this.events.length; i++) {
+          direction.push({
+            latitude: this.events[i].event_from_latitude,
+            longitude: this.events[i].event_form_dimention,
+            title:this.events[i].event_name
+          });
+        }
+        this.mapsApi.addDirection(direction);
+      }
       this.fire('events-loaded');
     }
   });

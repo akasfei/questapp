@@ -127,7 +127,7 @@
             <drawer-menu></drawer-menu>
           </section>
           <section main class="drawer-main" vertical layout center relative>
-            <map-container class="background-map" fit></map-container>
+            <map-container id="map" class="background-map" fit></map-container>
             <core-animated-pages id="cardPages" class="container" transitions="slide-from-right cross-fade" selected="{{cardPageSelected}}" on-backward="{{animationBackward}}" on-forward="{{animationForward}}">
               <section>
 
@@ -136,10 +136,10 @@
                 <trip-list id="tripList" show="true" query="{{searchInput}}" on-trip-selected="{{tripSelected}}" on-search-complete="{{searchComplete}}" on-show-trip-dialog="{{showTripDialog}}" slide-from-right cross-fade></trip-list>
               </section>
               <section>
-                <event-list id="eventList" trip="{{trip}}" on-event-selected="{{eventSelected}}" on-events-loaded="{{eventsLoaded}}" slide-from-right cross-fade></event-list>
+                <event-list id="eventList" trip="{{trip}}" mapsApi="{{$.map}}" on-event-selected="{{eventSelected}}" on-events-loaded="{{eventsLoaded}}" slide-from-right cross-fade></event-list>
               </section>
               <section>
-                <navigation-list id="navigationList" slide-from-right cross-fade></navigation-list>
+                <navigation-list id="navigationList" mapsApi="{{$.map}}" slide-from-right cross-fade></navigation-list>
               </section>
             </core-animated-pages>
             <trip-dialog id="tripDialog"></trip-dialog>
@@ -192,6 +192,11 @@
       eventSelected: function (e, d, s) {
         this.$.navigationList.index = d.index;
         this.$.navigationList.nodes = this.$.eventList.$.eventMode.events;
+        this.$.map.moveTo({
+          latitude: this.$.eventList.$.eventMode.events[d.index].event_from_latitude,
+          longitude: this.$.eventList.$.eventMode.events[d.index].event_form_dimention,
+          title: this.$.eventList.$.eventMode.events[d.index].event_name
+        });
         this.animationForward();
       },
       animationForward: function (e, d, s) {
