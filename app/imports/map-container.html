@@ -1,4 +1,5 @@
 <link rel="import" href="../bower_components/google-map/google-map.html" >
+<link rel="import" href="map-directions.html">
 
 <polymer-element name="map-container">
   <template>
@@ -17,30 +18,82 @@
         line-height: 14px;
       }
     </style>
-    <google-map id="google-map" class="background-map" apiKey="AIzaSyAKe0Oc1ulYsaGpYoLZHWcs8dCjv9xeP_Q" latitude="{{latitude}}" longitude="{{longitude}}" zoom="15" disableDefaultUI>
+    <google-map id="map" class="background-map" apiKey="AIzaSyAKe0Oc1ulYsaGpYoLZHWcs8dCjv9xeP_Q" latitude="{{latitude}}" longitude="{{longitude}}" zoom="{{zoom}}" disableDefaultUI>
       <template repeat="{{m in markers}}">
-        <google-map-marker latitude="{{m.latitude}}" longitude="{{m.longitude}}"></google-map-marker>
+        <google-map-marker latitude="{{m.latitude}}" longitude="{{m.longitude}}" title="{{m.title}}"></google-map-marker>
+      </template>
+      <template repeat="{{d, i in directions}}">
+        <google-map-marker latitude="{{d.end.latitude}}" longitude="{{d.end.longitude}}" title="{{d.end.title}}" icon="{{'images/markers/marker-' + (i + 1) + '.png'}}"></google-map-marker>
       </template>
     </google-map>
+    <template repeat="{{d in directions}}">
+      <google-map-directions map="{{$.map.map}}" startAddress="{{locToString(d.start)}}" endAddress="{{locToString(d.end)}}" renderOptions="{{directionsRenderOptions}}">{{d.contents}}</google-map-directions>
+    </template>
   </template>
   <script>
   Polymer('map-container', {
+    zoom: 14,
+    markers: [],
+    directions: [],
+    directionsRenderOptions: {
+      suppressMarkers: true
+    },
     ready: function () {
+      this.showCurrentLocation();
+    },
+    showCurrentLocation: function () {
       var self = this;
-      this.markers = [];
       if (window.navigator.geolocation) {
         window.navigator.geolocation.getCurrentPosition(function (position) {
           self.latitude = position.coords.latitude;
           self.longitude = position.coords.longitude;
-          self.current = {
+          self.currentLocation = {
             latitude: self.latitude,
-            longitude: self.longitude
+            longitude: self.longitude,
+            title: 'Your location'
           };
-          self.markers.push(self.current);
+          self.markers.push(self.currentLocation);
         }, function (err) {
           console.error(err);
         });
       }
+    },
+    addMarker: function (loc, title) {
+      if (loc && loc.latitude && loc.longitude)
+        this.marker.push({latitude: loc.latitude, longitude: loc.longitude, title: title});
+    },
+    clearMarkers: function () {
+      this.markers = [];
+    },
+    addDirection: function (nodes) {
+      for (var i = 1; i < nodes.length; i++) {
+        this.directions.push({
+          start: nodes[i-1],
+          end: nodes[i]
+        });
+      }
+    },
+    removeDirections: function () {
+      this.directions = [];
+    },
+    locToString: function (loc) {
+      var res = '';
+      var longitude = new Number(loc.longitude);
+      var latitude = new Number(loc.latitude);
+      if (longitude < 0)
+        res += (-1 * longitude) + 'W';
+      else
+        res += longitude + 'E';
+      if (latitude < 0)
+        res += (-1 * latitude) + 'S';
+      else
+        res += latitude + 'N';
+      return res;
+    },
+    moveTo: function (loc) {
+      this.latitude = loc.latitude;
+      this.longitude = loc.longitude;
+      this.zoom = 16;
     }
   });
   </script>
