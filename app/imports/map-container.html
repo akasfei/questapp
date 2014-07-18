@@ -1,6 +1,6 @@
 <link rel="import" href="../bower_components/google-map/google-map.html" >
 
-<polymer-element name="map-container">
+<polymer-element name="map-container" attributes="lats,lons">
   <template>
     <style>
       google-map {
@@ -16,31 +16,234 @@
         font-size: 12px;
         line-height: 14px;
       }
+      #map_canvas{
+        width: 100%;
+        height: 100%;
+      }
     </style>
-    <google-map id="google-map" class="background-map" apiKey="AIzaSyAKe0Oc1ulYsaGpYoLZHWcs8dCjv9xeP_Q" latitude="{{latitude}}" longitude="{{longitude}}" zoom="15" disableDefaultUI>
+    <!-- <google-map id="google-map" class="background-map" apiKey="AIzaSyAKe0Oc1ulYsaGpYoLZHWcs8dCjv9xeP_Q" latitude="{{latitude}}" longitude="{{longitude}}" zoom="15" disableDefaultUI>
       <template repeat="{{m in markers}}">
         <google-map-marker latitude="{{m.latitude}}" longitude="{{m.longitude}}"></google-map-marker>
       </template>
-    </google-map>
+    </google-map> -->
+    <div id="map_canvas"></div>
   </template>
   <script>
   Polymer('map-container', {
+    bounds : new google.maps.LatLngBounds (),
+    directionsDisplay : new google.maps.DirectionsRenderer(),
+    directionsService : new google.maps.DirectionsService(),
+    marker : [],
+    mapOptions : {
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center:new google.maps.LatLng(39.90960456049752,116.3972282409668)
+          },
+    currentLocation:{
+      lat:null,
+      lon:null
+    },
+    rectangle : new google.maps.Rectangle(),
+    map : null,
     ready: function () {
+      window.mapObj = this;
+      console.log(this);
       var self = this;
-      this.markers = [];
-      if (window.navigator.geolocation) {
-        window.navigator.geolocation.getCurrentPosition(function (position) {
-          self.latitude = position.coords.latitude;
-          self.longitude = position.coords.longitude;
-          self.current = {
-            latitude: self.latitude,
-            longitude: self.longitude
-          };
-          self.markers.push(self.current);
-        }, function (err) {
-          console.error(err);
+      var VLats = this.lats?this.lats.split(","):null;
+      var VLons = this.lons?this.lons.split(","):null;
+
+      this.getLocation();
+    },
+    getLocation:function(){
+      var self = this;
+      if (navigator.geolocation){
+          navigator.geolocation.getCurrentPosition(function(e){
+            self.map = new google.maps.Map(document.getElementById("map_canvas"),self.mapOptions);
+            self.marker.push(new google.maps.Marker({
+              position: self.mapOptions.center,
+              map: self.map
+            }));
+            //self.addDirection.call(self,[{lat:32,lon:116,title:"1:haha"},{lat:32.1,lon:116.1,title:"2:hehe"}]);
+          });
+        }
+        else{
+          x.innerHTML="Geolocation is not supported by this browser.";
+        }
+    },
+    showPosition:function(position){
+      var VLats = this.lats?this.lats.split(","):null;
+      var VLons = this.lons?this.lons.split(","):null;
+      var self = this;
+      if(VLats){
+          var southLine = parseFloat(VLats[0]),
+            northLine = parseFloat(VLats[0]),
+            westLine = parseFloat(VLons[0]),
+            eastLine = parseFloat(VLons[0]);
+            for(var lat in VLats){
+              var num = parseFloat(VLats[lat]);
+              southLine = southLine>num?num:southLine;
+              northLine = northLine<num?num:northLine;
+              self.bounds.extend(new google.maps.LatLng(num, parseFloat(VLons[lat])));
+            }
+            for( var lon in VLons){
+              var num = parseFloat(VLons[lon]);
+              westLine = westLine>num?num:westLine;
+              eastLine = eastLine<num?num:eastLine;
+            }
+            self.mapOptions.center = new google.maps.LatLng((southLine + northLine)/2.0, (westLine + eastLine)/2.0);
+      }
+      else{
+        self.mapOptions.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        self.bounds.extend(self.mapOptions.center);
+      }
+      self.map = new google.maps.Map(document.getElementById("map_canvas"),self.mapOptions);
+      self.map.fitBounds(self.bounds);
+      self.directionsDisplay.setMap(self.map);
+
+      self.marker.push(new google.maps.Marker({
+        position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        map: self.map
+      }));
+
+      var request = {
+        origin: "",
+        destination: "",
+        waypoints: [],
+        provideRouteAlternatives: false,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      }
+
+      for (var i = 0;i < VLats.length;i++){
+        switch(i){
+          case 0          : request.origin = new google.maps.LatLng(VLats[i],VLons[i]);break;
+          case VLats.length - 1 : request.destination = new google.maps.LatLng(VLats[i],VLons[i]);break;
+          default         : request.waypoints.push({
+                                    location:new google.maps.LatLng(VLats[i],VLons[i]),
+                                    stopover:true
+                                  });
+        }
+      }
+      if(!request.destination){
+        self.marker.push(new google.maps.Marker({
+          position: new google.maps.LatLng(VLats[0],VLons[0]),
+          map: self.map,
+          icon: 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
+        }));
+      }
+
+      self.directionsService.route(request, function(result, status) {
+            self.directionsDisplay.setDirections(result);
+        });
+    },
+    showCurrentLocation:function(){
+      return this.currentLocation;
+    },
+    getCurrentLocation:function(){
+      var hasGetLocaltion = false;
+      var self = this;
+      if (navigator.geolocation){
+        navigator.geolocation.getCurrentPosition(function(e){
+          self.currentLocation.lat = e.coords.latitude;
+          self.currentLocation.lon = e.coords.longitude;
+          console.log("getCurrentLocation",e,self.currentLocation)
+          if(e){
+            hasGetLocaltion = true;
+          }
         });
       }
+      else{
+        x.innerHTML="Geolocation is not supported by this browser.";
+      }
+
+      var wait = setInterval(function(){
+        if(hasGetLocaltion){
+          clearInterval(wait);
+        }
+      });
+
+      return this.currentLocation;
+    },
+    addDirection:function(dots){
+      window.addDirection = this.addDirection;
+      var self = this;
+      self.bounds = new google.maps.LatLngBounds ()
+
+      if(dots){
+          var southLine = parseFloat(dots[0].lat),
+            northLine = parseFloat(dots[0].lat),
+            westLine = parseFloat(dots[0].lon),
+            eastLine = parseFloat(dots[0].lon);
+            for(var dot in dots){
+              var lat = parseFloat(dots[dot].lat);
+              var lon = parseFloat(dots[dot].lon);
+              southLine = southLine>lat?lat:southLine;
+              northLine = northLine<lat?lat:northLine;
+              westLine = westLine>lon?lon:westLine;
+              eastLine = eastLine<lon?lon:eastLine;
+              self.bounds.extend(new google.maps.LatLng(lat, lon));
+            }
+      }
+      else{
+        self.bounds.extend(self.mapOptions.center);
+      }
+
+      var request = {
+        origin: "",
+        destination: "",
+        waypoints: [],
+        provideRouteAlternatives: false,
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC
+      }
+
+      for (var i = 0;i < dots.length;i++){
+        switch(i){
+          case 0          : request.origin = new google.maps.LatLng(dots[i].lat,dots[i].lon);break;
+          case dots.length - 1 : request.destination = new google.maps.LatLng(dots[i].lat,dots[i].lon);break;
+          default         : request.waypoints.push({
+                                    location:new google.maps.LatLng(dots[i].lat,dots[i].lon),
+                                    stopover:true
+                                  });
+        }
+      }
+      if(!request.destination){
+        self.marker.push(new google.maps.Marker({
+          position: new google.maps.LatLng(dots[0].lat,dots[0].lon),
+          map: self.map,
+          icon: 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1',
+          title:dots[0].title
+        }));
+        self.map.setCenter(new google.maps.LatLng(dots[0].lat,dots[0].lon));
+      }
+      else{
+        self.map.fitBounds(self.bounds);
+        self.directionsDisplay.setMap(self.map);
+      }
+
+      self.directionsService.route(request, function(result, status) {
+        var routesLeg = result.routes[0].legs;
+        console.log(result.routes[0].legs);
+        for(var i = 0; i < routesLeg.length; ++i){
+          (function(num){
+            switch(num){
+              case 0                   : result.routes[0].legs[0].start_address = dots[0].title;
+                                         result.routes[0].legs[0].end_address = dots[1].title;
+                                         console.log(num,result.routes[0].legs,0,dots);
+                                         break;
+              case routesLeg.length - 1 : result.routes[0].legs[routesLeg.length - 1].end_address = dots[routesLeg.length].title;
+                                          result.routes[0].legs[routesLeg.length - 1].start_address = dots[routesLeg.length - 1].title;
+                                          console.log(num,result.routes[0].legs,"last",dots);
+                                          break;
+              default                   : result.routes[0].legs[num].end_address = dots[num+1].title;
+                                          result.routes[0].legs[num].start_address = dots[num].title;
+                                          console.log(num,result.routes[0].legs,dots);
+            }
+          }).call(self,i);
+        }
+            self.directionsDisplay.setDirections(result);
+            console.log(result)
+        });
     }
   });
   </script>
