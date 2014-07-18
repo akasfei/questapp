@@ -36,16 +36,18 @@
       paper-tabs paper-tab::shadow #ink {
         color: #00c2ff;
       }
+      paper-item {
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+      }
     </style>
     <div class="card directions">
-      <paper-shadow z="2"></paper-shadow>
+      <paper-shadow z="1"></paper-shadow>
       <div horizontal layout center>
         <paper-icon-button icon="close" on-click="{{close}}"></paper-icon-button>
-        <paper-tabs selected="{{directionMode}}" flex>
-          <paper-tab><core-icon icon="maps:directionswalk"></core-icon></paper-tab>
-          <paper-tab><core-icon icon="maps:directions-car"></core-icon></paper-tab>
-          <paper-tab><core-icon icon="maps:directions-transit"></core-icon></paper-tab>
-        </paper-tabs>
+        <paper-item on-click="{{openGoogleMaps}}" flex horizontal layout center-justified>
+          <core-icon icon="maps:directions"></core-icon>
+        </paper-item>
         <paper-icon-button icon="history" on-click="{{toStart}}"></paper-icon-button>
       </div>
     </div>
@@ -53,12 +55,11 @@
       <template repeat="{{node, nodeIndex in nodes}}">
         <section>
           <div class="card" horizontal layout center cross-fade>
-            <paper-shadow z="1"></paper-shadow>
+            <paper-shadow z="2"></paper-shadow>
             <paper-icon-button icon="chevron-left" disabled?="{{nodeIndex == 0 ? true: false}}" on-click="{{previous}}"></paper-icon-button>
             <div flex vertical layout center>
               <p class="node-title">{{node.event_name}}</p>
             </div>
-            <paper-icon-button on-click="{{openGoogleMaps}}" icon="maps:directions"></paper-icon-button>
             <paper-icon-button icon="chevron-right" disabled?="{{nodeIndex == nodes.length - 1 ? true: false}}" on-click="{{next}}"></paper-icon-button>
           </div>
         </section>
@@ -103,7 +104,7 @@
       this.index = 0;
     },
     openGoogleMaps: function () {
-      window.location.href = 'google.navigation:q=' + this.mapsApi.locToString({
+      window.location.href = 'google.navigation:mode=d&q=' + this.mapsApi.locToString({
         latitude: this.nodes[this.index].event_from_latitude,
         longitude: this.nodes[this.index].event_form_dimention
       });

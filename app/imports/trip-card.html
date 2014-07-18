@@ -1,9 +1,10 @@
 <link rel="import" href="../bower_components/core-icons/core-icons.html" >
-<link rel="import" href="../bower_components/core-icons/iconsets/notification-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/communication-icons.html" >
 <link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/device-icons.html" >
 <link rel="import" href="../bower_components/paper-fab/paper-fab.html" >
 
-<polymer-element name="trip-card" attributes="name desc creator location duration stars comments query index key">
+<polymer-element name="trip-card" attributes="name desc creator location duration stars comments query index key cover">
   <template>
     <style>
       :host {
@@ -29,23 +30,29 @@
         color: #333;
         font-size: 18px;
         line-height: 22px;
-        margin: 0 0 4px 0;
+        margin: 8px;
       }
       .details {
         color: #aaa;
         font-size: 12px;
         line-height: 16px;
-        margin: 0 0 4px 0;
+        margin: 8px 0 0 10px;
+      }
+      .details core-icon {
+        vertical-align: top;
+      }
+      .details > span {
+        margin-right: 12px;
       }
       .desc {
         color: #444;
         font-size: 14px;
         line-height: 16px;
-        margin: 0 0 4px 0;
+        margin: 8px 0 8px 10px;
       }
       .foot-note {
         color: #bbb;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 16px;
         border-top: 1px solid #ccc;
         padding-top: 2px;
@@ -74,42 +81,27 @@
         font-size: 22px;
         line-height: 32px;
       }
-      .comment {
-        padding 8px;
-        margin-bottom: 8px;
-        border-bottom: 1px solid #ccc;
-      }
-      .comment > h1 {
-        color: #333;
-        font-size: 16px;
-        line-height: 22px;
-        margin: 0 0 4px 0;
-      }
-      .comment > .content {
-        font-size: 14px;
-        line-height: 20px;
-        margin: 0 0 4px 0;
-      }
-      .comment > .foot-note {
-        border: none;
+      #viewEvents {
+        width: 48px;
+        padding-left: 4px;
+        border-left: 1px solid #ccc;
       }
     </style>
-    <div class="card">
+    <div class="card" horizontal layout>
       <paper-shadow z="1"></paper-shadow>
-      <paper-icon-button id="viewEvents" icon="chevron-right" on-click="{{openEventList}}"></paper-icon-button>
-      <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{toggleDetails}}"></paper-ripple>
-      <div flex>
+      <div flex relative>
+        <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{toggleDetails}}" fit></paper-ripple>
         <h1>{{name}}</h1>
-        <div class="details">
-          <span><core-icon icon="maps:place" size="16"></core-icon> {{location}}</span>
-          <span><core-icon icon="schedule" size="16"></core-icon> ~{{durationFormatted}}</span>
-        </div>
         <p class="desc">{{desc}}</p>
-        <p class="foot-note" horizontal layout>
-          <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{creator}}</span>
-          <span class="card-stars"><core-icon icon="star" size="16"></core-icon>{{stars}}</span>
-          <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{comments.length}}</span>
-        </p>
+        <div class="details">
+          <span><core-icon icon="view-list" size="14"></core-icon> {{location}}</span>
+          <span><core-icon icon="device:timer" size="14"></core-icon> {{durationFormatted}}</span>
+          <span class="card-stars"s><core-icon icon="communication:comment" size="14"></core-icon> {{comments.length}}</span>
+        </div>
+      </div>
+      <div id="viewEvents" relative vertical layout center-justified center>
+        <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{openEventList}}" fit></paper-ripple>
+        <core-icon icon="chevron-right"></core-icon>
       </div>
     </div>
   </template>

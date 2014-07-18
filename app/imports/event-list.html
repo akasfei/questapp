@@ -13,6 +13,8 @@
     <style>
       :host {
         display: block;
+        max-height: 560px;
+        overflow-y: scroll;
       }
       #container,
       .card {
@@ -30,13 +32,6 @@
       paper-tabs paper-tab::shadow #ink {
         color: #4cd4ff;
       }
-      h1 {
-        display: inline-block;
-        color: #444;
-        font-size: 20px;
-        line-height: 36px;
-        margin: 0;
-      }
       core-animated-pages {
         min-height: 40px;
       }
@@ -44,34 +39,43 @@
         display: block;
         background-color: #fff;
       }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 8px;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 8px 0 0 10px;
+      }
+      .details core-icon {
+        vertical-align: top;
+      }
+      .details > span {
+        margin-right: 12px;
+      }
       .desc {
         color: #444;
         font-size: 14px;
         line-height: 16px;
-        margin: 0 0 4px 0;
-      }
-      .foot-note {
-        color: #bbb;
-        font-size: 12px;
-        line-height: 16px;
-        margin: 0;
+        margin: 8px 0 8px 10px;
       }
     </style>
     <div vertical layout>
       <div id="container">
         <paper-shadow z="1"></paper-shadow>
         <section layout horizontal>
-          <div flex>
-            <h1 flex>{{trip.name}}</h1>
+          <div vertical layout center-justified>
+            <paper-icon-button icon="chevron-left" on-click="{{fireBackward}}"></paper-icon-button>
+          </div>
+          <div flex relative>
+            <h1>{{trip.name}}</h1>
             <p class="desc">{{trip.desc}}</p>
-            <p class="foot-note" horizontal layout>
-              <span class="card-creator"><core-icon icon="account-box" size="16"></core-icon>{{trip.creator}}</span>
-              <span class="card-stars"><core-icon icon="star" size="16"></core-icon>{{trip.stars}}</span>
-              <span class="card-stars"s><core-icon icon="notification:sms" size="16"></core-icon>{{trip.comments.length}}</span>
-            </p>
           </div>
           <div vertical layout center-justified>
-            <paper-icon-button icon="close" on-click="{{fireBackward}}"></paper-icon-button>
             <paper-icon-button icon="{{listActive? 'expand-less': 'expand-more'}}" on-click="{{toggleList}}"></paper-icon-button>
           </div>
         </section>

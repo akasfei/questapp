@@ -20,7 +20,7 @@
       <template repeat="{{trip, i in trips}}">
         <trip-card name="{{trip.name_Chinese}}" desc="{{trip.trip_description}}" creator="{{trip.creator_id}}"
           location="{{trip.trip_event_sum}}" duration="{{trip.trip_time}}" stars="{{trip.trip_stars}}"
-          comments="{{trip.trip_comments}}" index="{{i}}" key="{{trip.key}}"></trip-card>
+          comments="{{trip.trip_comments}}" index="{{i}}" key="{{trip.key}}" cover="{{trip.trip_image}}"></trip-card>
       </template>
     </div>
   </template>

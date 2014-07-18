@@ -17,7 +17,7 @@
       handleAs="json">
     </core-ajax>
     <template repeat="{{e, eIndex in events}}">
-      <event-card name="{{e.event_name}}" desc="{{e.event_description}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
+      <event-card event="{{e}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
     </template>
   </template>
   <script>
