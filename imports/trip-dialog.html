@@ -1,0 +1,129 @@
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog.html" >
+<link rel="import" href="../bower_components/paper-dialog/paper-dialog-transition.html" >
+
+<polymer-element name="trip-dialog" attributes="trip">
+  <template>
+    <style>
+      :host {
+        display: block;
+        width: 100%;
+      }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 0 0 4px 0;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 0 0 4px 0;
+      }
+      .foot-note {
+        color: #bbb;
+        font-size: 12px;
+        line-height: 16px;
+        border-top: 1px solid #ccc;
+        padding-top: 2px;
+        margin: 0;
+      }
+      .foot-note > span {
+        margin-right: 4px;
+      }
+      paper-dialog {
+        top: 64px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+      }
+      paper-dialog > section {
+        padding-top: 8px;
+        width: 100%;
+      }
+      paper-dialog > section > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        max-width: 100%;
+      }
+      paper-dialog /deep/ #container {
+        max-width: 100% !important;
+        max-height: 100% !important;
+      }
+      paper-dialog /deep/ #main {
+        padding: 200px 16px 0 16px;
+      }
+      h1.title {
+        position: absolute;
+        top: 160px;
+        left: 16px;
+        color: #fff;
+        font-size: 22px;
+        line-height: 32px;
+        z-index: 101;
+      }
+      .comment {
+        padding: 20px 8px 16px 8px;
+        border-bottom: 1px solid #ccc;
+      }
+      .comment > h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 0 0 8px 0;
+      }
+      .comment > .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 8px 0 4px 2px;
+      }
+      .comment > .content {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 8px 0 0 2px;
+      }
+      .comment > .details > span {
+        margin-right: 12px;
+      }
+    </style>
+    <paper-dialog static id="detailsDialog" transition="paper-dialog-transition-bottom" touch-action="pan-y">
+      <section>
+        <img src="{{'images/' + cover}}" alt="">
+        <h1 class="title">{{trip.name}}</h1>
+        <template repeat="{{c in trip.comments}}">
+          <div class="comment">
+            <h1>{{c.trip_comment_title}}</h1>
+            <p class="content">{{c.trip_comment_content}}</p>
+            <p class="details" horizontal layout>
+              <span class="card-creator"><core-icon icon="account-box" size="14"></core-icon> {{c.trip_comment_uploader_id}}</span>
+              <span class="card-stars"><core-icon icon="thumb-up" size="14"></core-icon> {{c.trip_comment_liked}}</span>
+              <span class="card-stars"><core-icon icon="thumb-down" size="14"></core-icon> {{c.trip_comment_disliked}}</span>
+            </p>
+          </div>
+        </template>
+      </section>
+      <paper-button label="Close" affirmative autofocus></paper-button>
+    </paper-dialog>
+  </template>
+  <script>
+  Polymer('trip-dialog', {
+    cover: 'trip-image-default-1.jpg',
+    toggle: function () {
+      if (this.trip.cover)
+        this.cover = 'trip-images/' + this.trip.cover;
+      else
+        this.cover = 'trip-image-default-' + this.trip.index % 3 + '.jpg';
+      this.$.detailsDialog.toggle();
+    }
+  });
+  </script>
+</polymer-element>

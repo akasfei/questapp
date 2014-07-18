@@ -1,0 +1,131 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/communication-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/device-icons.html" >
+<link rel="import" href="../bower_components/paper-fab/paper-fab.html" >
+
+<polymer-element name="trip-card" attributes="name desc creator location duration stars comments query index key cover">
+  <template>
+    <style>
+      :host {
+        position: relative;
+        display: block;
+      }
+      .card {
+        padding: 8px;
+        background: #fff;
+      }
+      paper-ripple {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      paper-icon-button {
+        float: right;
+        z-index: 1;
+      }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 8px;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 8px 0 0 10px;
+      }
+      .details core-icon {
+        vertical-align: top;
+      }
+      .details > span {
+        margin-right: 12px;
+      }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 8px 0 8px 10px;
+      }
+      .foot-note {
+        color: #bbb;
+        font-size: 14px;
+        line-height: 16px;
+        border-top: 1px solid #ccc;
+        padding-top: 2px;
+        margin: 0;
+      }
+      .foot-note > span {
+        margin-right: 4px;
+      }
+      paper-dialog {
+        top: 80px;
+      }
+      paper-dialog > section {
+        padding-top: 8px;
+        width: 100%;
+      }
+      paper-dialog > section > img {
+        max-width: 100%;
+        padding: 4px;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+      }
+      paper-dialog /deep/ #main {
+        padding: 8px;
+      }
+      paper-dialog /deep/ #main > h1 {
+        font-size: 22px;
+        line-height: 32px;
+      }
+      #viewEvents {
+        width: 48px;
+        padding-left: 4px;
+        border-left: 1px solid #ccc;
+      }
+    </style>
+    <div class="card" horizontal layout>
+      <paper-shadow z="1"></paper-shadow>
+      <div flex relative>
+        <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{toggleDetails}}" fit></paper-ripple>
+        <h1>{{name}}</h1>
+        <p class="desc">{{desc}}</p>
+        <div class="details">
+          <span><core-icon icon="view-list" size="14"></core-icon> {{location}}</span>
+          <span><core-icon icon="device:timer" size="14"></core-icon> {{durationFormatted}}</span>
+          <span class="card-stars"s><core-icon icon="communication:comment" size="14"></core-icon> {{comments.length}}</span>
+        </div>
+      </div>
+      <div id="viewEvents" relative vertical layout center-justified center>
+        <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" on-click="{{openEventList}}" fit></paper-ripple>
+        <core-icon icon="chevron-right"></core-icon>
+      </div>
+    </div>
+  </template>
+  <script>
+  Polymer('trip-card', {
+    ready: function () {
+      var format = new Date('1970-01-01 ' + this.duration);
+      if (format.getHours() > 0)
+        this.durationFormatted = format.getHours() + ' hrs';
+      else if (format.getMinutes() > 0)
+        this.durationFormatted = format.getMinutes() + ' min';
+      else if (format.getSeconds() > 0)
+        this.durationFormatted = format.getSeconds() + ' sec';
+      else if (this.duration.search(/^24/) >= 0)
+        this.durationFormatted = '1 day';
+      else
+        this.durationFormatted = 'UNKNOWN';
+    },
+    openEventList: function () {
+      this.fire('trip-selected', this);
+    },
+    toggleDetails: function () {
+      this.fire('show-trip-dialog', this);
+    }
+  });
+  </script>
+</polymer-element>

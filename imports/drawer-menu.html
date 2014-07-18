@@ -1,0 +1,81 @@
+<link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/hardware-icons.html" >
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html" >
+
+<polymer-element name="drawer-menu">
+  <template>
+    <style>
+    :host {
+      display: block;
+      color: #444;
+      font-size: 18px;
+      padding: 0 4px;
+    }
+    core-item {
+      position: relative;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    .background-ripple {
+      cursor: pointer;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .developer {
+      color: #ccc;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: center;
+      margin-top: 16px;
+    }
+    .developer a {
+      color: #bbb;
+      text-decoration: none !important;
+    }
+    </style>
+
+    <core-item icon="favorite" label="Recommended" on-click="{{fireRecommended}}">
+      <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
+      <!-- <a href="javascript:void(0)"></a> -->
+    </core-item>
+    <core-item icon="explore" label="Nearby">
+      <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
+      <!-- <a href="javascript:void(0)"></a> -->
+    </core-item>
+    <core-item icon="star" label="Stars">
+      <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
+      <!-- <a href="javascript:void(0)"></a> -->
+    </core-item>
+    <core-item icon="apps" label="My Quests">
+      <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
+      <!-- <a href="javascript:void(0)"></a> -->
+    </core-item>
+    <core-item icon="remove" label="Sign out">
+      <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
+      <!-- <a href="javascript:void(0)"></a> -->
+    </core-item>
+    <div class="developer">
+      <core-icon size="16" icon="image:auto-fix"></core-icon> and <core-icon size="16" icon="hardware:keyboard-arrow-left"></core-icon><core-icon size="16" icon="hardware:keyboard-arrow-right"></core-icon> with <core-icon size="16" icon="favorite"></core-icon> by
+      <br>
+      <a href="mailto:super-ops@ssiops.org">Le Zhou</a>
+      <br>
+      <a href="mailto:cguo.tju@gmail.com">Chong Guo</a>
+      <br>
+      <a href="mailto:weijianyang@hustunique.com">Weijian Yang</a>
+      <br>
+      <a href="mailto:hongsrzj@gmail.com">Zhijin Hong</a>
+    </div>
+  </template>
+
+  <script>
+  Polymer({
+    fireRecommended: function () {
+      this.fire('recommended-clicked');
+    }
+  });
+  </script>
+</polymer-element>

@@ -1,0 +1,250 @@
+<link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+<link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+<link rel="import" href="../bower_components/core-menu-button/core-menu-button.html">
+<link rel="import" href="../bower_components/core-item/core-item.html">
+<link rel="import" href="../bower_components/core-icons/core-icons.html" >
+<link rel="import" href="../bower_components/core-icons/iconsets/social-icons.html" >
+<link rel="import" href="../bower_components/core-drawer-panel/core-drawer-panel.html">
+<link rel="import" href="../bower_components/core-animated-pages/core-animated-pages.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-right.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/slide-from-bottom.html">
+<link rel="import" href="../bower_components/core-animated-pages/transitions/cross-fade.html">
+
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-item/paper-item.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
+
+<link rel="import" href="drawer-menu.html">
+<link rel="import" href="trip-list.html">
+<link rel="import" href="event-list.html">
+<link rel="import" href="navigation-list.html">
+<link rel="import" href="map-container.html">
+<link rel="import" href="trip-dialog.html">
+
+<polymer-element name="quest-app">
+  <template>
+    <style>
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      core-toolbar {
+        font-size: 14px;
+        background: #009adf;
+        color: white;
+      }
+      paper-checkbox {
+        padding: 20px 20px 20px 0;
+      }
+      .drawer {
+        background: #fff;
+      }
+      .drawer-main {
+        position: relative;
+        max-width: 100%;
+      }
+      #tabs {
+        width: 100%;
+        margin: 0;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      .container {
+        width: 100%;
+        margin: 8px 0;
+      }
+
+      core-toolbar > paper-input {
+        color: rgba(255,255,255,.75);
+        font-size: 16px;
+        margin-bottom: 5px !important;
+        border-color: #fff;
+      }
+
+      core-toolbar > paper-input /deep/ #errorContainer {
+        display: none;
+      }
+
+      core-toolbar > paper-input /deep/ #underline {
+        background-color: rgba(255,255,255,.75);
+      }
+
+      core-toolbar > paper-input /deep/ .focusedColor {
+        color: fff;
+        background: #fff;
+      }
+
+      core-toolbar > paper-input /deep/ input {
+        color: #fff;
+        margin-bottom: 0.2em;
+      }
+
+      paper-menu-button > paper-item {
+        color: #333;
+      }
+
+      paper-menu-button /deep/ paper-menu-button-overlay-container {
+        top: 56px !important;
+      }
+
+      paper-toast > div {
+        color: #44b3e4;
+      }
+
+      @media (min-width: 641px) {
+        #tabs {
+          width: 400px;
+        }
+        .container {
+          width: 400px;
+        }
+        .drawer {
+          padding: 8px;
+        }
+        core-toolbar {
+          font-size: 18px;
+        }
+        #toolbar-menu-button {
+          display: none;
+        }
+      }
+    </style>
+    <core-header-panel>
+      <core-toolbar id="core-toolbar" relative>
+        <paper-icon-button icon="menu" id="toolbar-menu-button" on-click="{{toggleDrawer}}"></paper-icon-button>
+        <paper-input label="Find a Quest..." value="{{searchInput}}" flex></paper-input>
+        <paper-icon-button icon="search" on-click="{{searchTrips}}"></paper-icon-button>
+        <paper-menu-button icon="more-vert" halign="right">
+          <paper-item id="activateFullScreen"><core-icon icon="fullscreen"></core-icon> Full Screen</paper-item>
+          <paper-item on-click="{{share}}"><core-icon icon="social:share-alt"></core-icon> Share</paper-item>
+          <paper-item on-click="{{gotoGithub}}"><core-icon icon="device:developer-mode"></core-icon> Fork on Github</paper-item>
+        </paper-menu-button>
+        <!-- <paper-ripple fit class="background-ripple"></paper-ripple> -->
+      </core-toolbar>
+      <br>
+      <div class="container" layout vertical center>
+        <core-drawer-panel id="drawer-panel" selected="{{opened? 'drawer': 'main'}}" on-click="{{drawerClicked}}">
+          <section drawer vertical layout class="drawer">
+            <drawer-menu on-recommended-clicked="{{gotoRecommended}}"></drawer-menu>
+          </section>
+          <section main class="drawer-main" vertical layout center relative>
+            <map-container id="map" class="background-map" fit></map-container>
+            <core-animated-pages id="cardPages" class="container" transitions="slide-from-right cross-fade" selected="{{cardPageSelected}}" on-backward="{{animationBackward}}" on-forward="{{animationForward}}">
+              <section>
+
+              </section>
+              <section>
+                <trip-list id="tripList" show="true" query="{{searchInput}}" on-trip-selected="{{tripSelected}}" on-search-complete="{{searchComplete}}" on-show-trip-dialog="{{showTripDialog}}" slide-from-right cross-fade></trip-list>
+              </section>
+              <section>
+                <event-list id="eventList" trip="{{trip}}" mapsApi="{{$.map}}" on-event-selected="{{eventSelected}}" on-events-loaded="{{eventsLoaded}}" slide-from-right cross-fade></event-list>
+              </section>
+              <section>
+                <navigation-list id="navigationList" mapsApi="{{$.map}}" slide-from-right cross-fade></navigation-list>
+              </section>
+            </core-animated-pages>
+            <trip-dialog id="tripDialog"></trip-dialog>
+          </section>
+        </core-drawer-panel>
+      </div>
+    </core-header-panel>
+    <paper-toast id="toast" role="alert" text="{{toastMessage}}">
+      <div>DISMISS</div>
+    </paper-toast>
+  </template>
+  <script>
+    Polymer('quest-app', {
+      fullScreen: false,
+      ready: function () {
+        this.opened = false;
+        this.showTripList = false;
+        this.cardPageSelected = 0;
+        this.$.activateFullScreen.addEventListener('click', function () {
+          if ( document.FullScreen
+            || document.mozFullScreen
+            || document.webkitIsFullScreen ) {
+            (
+              document.exitFullscreen ||
+              document.mozExitFullscreen ||
+              document.webkitExitFullscreen
+            ).call(document);
+          } else {
+            (
+              document.documentElement.requestFullScreen ||
+              document.documentElement.mozRequestFullScreen ||
+              document.documentElement.webkitRequestFullScreen
+            ).call(document.documentElement);
+          }
+          this.fullScreen = !this.fullScreen;
+        });
+      },
+      toggleDrawer: function () {
+        this.opened = !this.opened;
+      },
+      drawerClicked: function (e, d, s) {
+        if (s.$.scrim) this.opened = false;
+      },
+      searchTrips: function () {
+        this.showTripList = true;
+        this.$.tripList.refresh();
+      },
+      searchComplete: function () {
+        this.cardPageSelected = 1;
+      },
+      tripSelected: function (e, d, s) {
+        this.trip = d;
+        this.$.eventList.loadEvents();
+      },
+      eventsLoaded: function () {
+        this.animationForward();
+      },
+      eventSelected: function (e, d, s) {
+        this.$.navigationList.index = d.index;
+        this.$.navigationList.nodes = this.$.eventList.$.eventMode.events;
+        this.$.map.moveTo({
+          lat: this.$.eventList.$.eventMode.events[d.index].event_from_latitude,
+          lon: this.$.eventList.$.eventMode.events[d.index].event_form_dimention,
+          title: this.$.eventList.$.eventMode.events[d.index].event_name
+        });
+        this.animationForward();
+      },
+      animationForward: function (e, d, s) {
+        this.cardPageSelected += 1;
+      },
+      animationBackward: function (e, d, s) {
+        if (this.cardPageSelected == 0) return;
+        this.cardPageSelected -= 1;
+      },
+      showTripDialog: function (e, d, s) {
+        this.$.tripDialog.trip = d;
+        this.$.tripDialog.toggle();
+      },
+      gotoRecommended: function (e, d, s) {
+        this.searchInput = 'Recommended';
+        this.opened = false;
+        this.$.tripList.refresh();
+      },
+      gotoGithub: function (e, d, s) {
+        window.open('https://github.com/akasfei/questapp', '_blank');
+      },
+      share: function () {
+        var content = '';
+        if (this.cardPageSelected <= 1) {
+          this.toastMessage = 'Please select a TRIP or an EVENT.'
+          return this.$.toast.show();
+        } else if (this.cardPageSelected == 2) {
+          content = this.$.eventList.trip.name_Chinese + ': ' + this.this.$.eventList.trip.trip_description;
+        } else if (this.cardPageSelected == 3) {
+          var e = this.$.navigationList.nodes[this.$.navigationList.index]
+          content = e.event_name + ': ' + e.event_description + ' @' + e.event_loc;
+        }
+        window.location.href = 'sms://10086?body=' + encodeURIComponent(content);
+      }
+    });
+  </script>
+</polymer-element>

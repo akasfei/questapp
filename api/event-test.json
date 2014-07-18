@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Hack XMP",
+    "location": {
+      "latitude": "40.00",
+      "longitude": "116.36"
+    },
+    "desc": "Hack portals to obtain some XMPs"
+  },
+  {
+    "title": "Find target portal",
+    "location": {
+      "latitude": "40.00",
+      "longitude": "116.36"
+    },
+    "desc": "Move into range of target portal. A group of portals is recommended."
+  },
+  {
+    "title": "Fire XMP",
+    "location": {
+      "latitude": "40.00",
+      "longitude": "116.36"
+    },
+    "desc": "Boom Boom Boom"
+  }
+]

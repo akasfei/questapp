@@ -1,0 +1,50 @@
+<link rel="import" href="../bower_components/core-ajax/core-ajax.html">
+
+<link rel="import" href="../bower_components/paper-shadow/paper-shadow.html">
+
+<link rel="import" href="event-card.html">
+
+<polymer-element name="event-mode" attributes="key mapsApi mode">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <core-ajax id="ajax"
+      url="{{'../api/api-' + key + '-nodes.json'}}"
+      on-core-response="{{eventsLoaded}}"
+      handleAs="json">
+    </core-ajax>
+    <template repeat="{{e, eIndex in events}}">
+      <event-card event="{{e}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
+    </template>
+  </template>
+  <script>
+  Polymer('event-mode', {
+    ready: function () {
+      this.events = []
+    },
+    load: function () {
+      this.$.ajax.go();
+    },
+    eventsLoaded: function () {
+      this.events = this.$.ajax.response.trip_event;
+      if (this.mapsApi) {
+        // this.mapsApi.removeDirections();
+        // this.mapsApi.showCurrentLocation();
+        var direction = [this.mapsApi.currentLocation];
+        for (var i = 0; i < this.events.length; i++) {
+          direction.push({
+            lat: this.events[i].event_from_latitude,
+            lon: this.events[i].event_form_dimention,
+            title:this.events[i].event_name
+          });
+        }
+        this.mapsApi.addDirection(direction);
+      }
+      this.fire('events-loaded');
+    }
+  });
+  </script>
+</polymer-element>

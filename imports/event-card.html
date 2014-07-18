@@ -1,0 +1,94 @@
+<link rel="import" href="../bower_components/core-icons/core-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/maps-icons.html">
+<link rel="import" href="../bower_components/core-icons/iconsets/image-icons.html">
+
+<link rel="import" href="../bower_components/paper-ripple/paper-ripple.html">
+<link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
+
+
+<polymer-element name="event-card" attributes="tripName mapsApi event index">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      #container {
+        position: relative;
+        padding: 8px;
+        margin: 0 8px 8px 8px;
+        background: #fff;
+      }
+      h1 {
+        color: #333;
+        font-size: 18px;
+        line-height: 22px;
+        margin: 8px;
+      }
+      .details {
+        color: #aaa;
+        font-size: 12px;
+        line-height: 16px;
+        margin: 8px 0 0 10px;
+      }
+      .details core-icon {
+        vertical-align: top;
+      }
+      .details > span {
+        margin-right: 12px;
+      }
+      .desc {
+        color: #444;
+        font-size: 14px;
+        line-height: 16px;
+        margin: 8px 8px 8px 12px;
+      }
+      .index {
+        color: #009adf;
+        font-size: 36px;
+      }
+      paper-icon-button {
+        color: #888;
+        float: right;
+        z-index: 2;
+      }
+    </style>
+    <div id="container" horizontal layout>
+      <paper-shadow z="1"></paper-shadow>
+      <div class="index">{{index + 1}}</div>
+      <div flex on-click="{{fireEventSelected}}">
+        <paper-ripple initialOpacity="0.1" opacityDecayVelocity="0.4" fit></paper-ripple>
+        <h1>{{event.event_name}}</h1>
+        <div class="details" horizontal layout>
+          <span><core-icon icon="maps:place" size="14"></core-icon> {{event.event_loc}}</span>
+        </div>
+        <p class="desc">{{event.event_description}}</p>
+        <div class="details">
+          <span><core-icon icon="device:timer" size="14"></core-icon> {{durationFormatted}}</span>
+          <span class="card-stars"s><core-icon icon="list" size="14"></core-icon> {{event.event_checklist.length}}</span>
+          <span class="card-stars"s><core-icon icon="communication:comment" size="14"></core-icon> {{event.event_comments.length}}</span>
+          <span class="card-stars"s><core-icon icon="image:image" size="14"></core-icon> {{event.event_images.length}}</span>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  Polymer('event-card', {
+    ready: function () {
+      var format = new Date('1970-01-01 ' + this.event.event_time);
+      if (format.getHours() > 0)
+        this.durationFormatted = format.getHours() + ' hrs';
+      else if (format.getMinutes() > 0)
+        this.durationFormatted = format.getMinutes() + ' min';
+      else if (format.getSeconds() > 0)
+        this.durationFormatted = format.getSeconds() + ' sec';
+      else if (this.duration.search(/^24/) >= 0)
+        this.durationFormatted = '1 day';
+      else
+        this.durationFormatted = 'UNKNOWN';
+    },
+    fireEventSelected: function () {
+      this.fire('event-selected', {index: this.index});
+    }
+  });
+  </script>
+</polymer-element>
