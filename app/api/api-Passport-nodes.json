@@ -5,14 +5,14 @@
 				"event_name": "去学校户籍科借户口卡",
 				"event_loc": "北京大学行政楼配楼户籍科",
 				"event_loc_eng" : "The administration building of Peking University",
-				"event_from_latitude" : 39.997754,
-				"event_form_dimention" : 116.316164,
+				"event_from_latitude" : 39.995275,
+				"event_form_dimention" : 116.308610,
 				"event_description": "拿着辅导员开的证明去找户籍科老师，老师经常不在，一次成功的概率还是比较小的",
 				"event_name_next" : "去公安局办理护照",
 				"event_loc_next": "中关村科技园区服务中心三层",
 				"event_liked": "true",
 				"event_liked_time" : "2014/07/12",
-				"event_time": "00:10:00", 	
+				"event_time": "00:10:00",
 				"event_checklist_number": 1,
 				"event_checklist": [
 					{
@@ -20,7 +20,7 @@
 						"checklist_item" : "辅导员开具的在校证明",
 						"checklist_checked": "true"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -44,7 +44,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 0,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0030",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2014/03/14"
@@ -80,11 +80,11 @@
 				"event_name": "去公安局办理护照",
 				"event_loc": "中关村科技园区服务中心三层（海淀区阜成路67号）",
 				"event_loc_eng" : "xiaochangchen houhai",
-				"event_from_latitude" : 39.930562,
-				"event_form_dimention" : 116.306672,
+				"event_from_latitude" : 39.924216,
+				"event_form_dimention" : 116.299349,
 				"event_description": "到达大厅后具体的流程在填表处都有：领号，填表，照相（发条形码），等待叫号，办理，交费（首次200，换发220，丢失420），领取护照的回执单，等待7个工作日。",
 				"event_name_next" : "null",
-				"event_loc_next": "null", 
+				"event_loc_next": "null",
 				"event_liked": "true",
 				"event_liked_time" : "2014/07/12",
 				"event_time": "01:30:00",
@@ -110,7 +110,7 @@
 						"checklist_item" : "换发护照, 需要旧护照原件及首页复印件",
 						"checklist_checked": "false"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -134,7 +134,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 1,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0030",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2013/08/14"
@@ -170,7 +170,7 @@
 						"event_comment_liked" : 100,
 						"event_comment_disliked" : 15,
 						"event_comment_voted" : 115,
-						"event_comment_balanced" : 85, 
+						"event_comment_balanced" : 85,
 						"event_comment_uploader_uid" : "0002",
 						"event_comment_uploader_id" : "非常吃货",
 						"event_comment_uploader_date" : "2014/07/15"

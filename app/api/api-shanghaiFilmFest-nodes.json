@@ -5,14 +5,14 @@
 				"event_name": "《愤怒的公牛》",
 				"event_loc": "上海和平影都",
 				"event_loc_eng" : "He Ping Cinema",
-				"event_from_latitude" : 31.238722,
-				"event_form_dimention" : 121.48251,
+				"event_from_latitude" : 31.232759,
+				"event_form_dimention" : 121.475973,
 				"event_description": "在和平影都观看马丁·斯科塞斯 - 《愤怒的公牛》",
 				"event_name_next" : "大光明电影院",
 				"event_loc_next": "上海市黄浦区大光明电影院(南京西路店)",
 				"event_liked": "true",
 				"event_liked_time" : "2014/07/12",
-				"event_time": "02:30:00", 	
+				"event_time": "02:30:00",
 				"event_checklist_number": 1,
 				"event_checklist": [
 					{
@@ -20,7 +20,7 @@
 						"checklist_item" : "电影票",
 						"checklist_checked": "true"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -44,7 +44,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 1,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0030",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2014/03/14"
@@ -80,7 +80,7 @@
 						"event_comment_liked" : 100,
 						"event_comment_disliked" : 15,
 						"event_comment_voted" : 115,
-						"event_comment_balanced" : 85, 
+						"event_comment_balanced" : 85,
 						"event_comment_uploader_uid" : "0002",
 						"event_comment_uploader_id" : "非常吃货",
 						"event_comment_uploader_date" : "2014/03/15"
@@ -92,11 +92,11 @@
 				"event_name": "《达拉斯买家俱乐部》",
 				"event_loc": "上海市黄浦区大光明电影院(南京西路店)",
 				"event_loc_eng" : "xiaochangchen houhai",
-				"event_from_latitude" : 31.239013,
-				"event_form_dimention" : 121.477773,
+				"event_from_latitude" : 31.232988,
+				"event_form_dimention" : 121.471263,
 				"event_description": "奥斯卡话题之作，两大男神演技火拼，大光明电影院1号厅",
 				"event_name_next" : "国泰电影院",
-				"event_loc_next": "上海市卢湾区国泰电影院", 
+				"event_loc_next": "上海市卢湾区国泰电影院",
 				"event_liked": "false",
 				"event_liked_time" : "2014/07/12",
 				"event_time": "02:30:00",
@@ -107,7 +107,7 @@
 						"checklist_item" : "电影票",
 						"checklist_checked": "true"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -131,7 +131,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 1,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0030",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2014/03/14"
@@ -167,7 +167,7 @@
 						"event_comment_liked" : 100,
 						"event_comment_disliked" : 15,
 						"event_comment_voted" : 115,
-						"event_comment_balanced" : 85, 
+						"event_comment_balanced" : 85,
 						"event_comment_uploader_uid" : "0002",
 						"event_comment_uploader_id" : "非常吃货",
 						"event_comment_uploader_date" : "2014/03/15"
@@ -179,11 +179,11 @@
 				"event_name": "《上海爵士》",
 				"event_loc": "国泰电影院",
 				"event_loc_eng" : "国泰电影院",
-				"event_from_latitude" : 31.22412,
-				"event_form_dimention" : 121.467798,
+				"event_from_latitude" : 31.217856,
+				"event_form_dimention" : 121.461397,
 				"event_description": "一部影片带你回顾上海腔调。",
 				"event_name_next" : "《阿拉伯的劳伦斯》",
-				"event_loc_next": "上海影城", 
+				"event_loc_next": "上海影城",
 				"event_liked": "true",
 				"event_liked_time" : "2014/07/12",
 				"event_time": "02:30:00",
@@ -194,7 +194,7 @@
 						"checklist_item" : "电影票",
 						"checklist_checked": "true"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -218,7 +218,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 1,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0030",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2014/03/14"
@@ -254,7 +254,7 @@
 						"event_comment_liked" : 100,
 						"event_comment_disliked" : 15,
 						"event_comment_voted" : 115,
-						"event_comment_balanced" : 85, 
+						"event_comment_balanced" : 85,
 						"event_comment_uploader_uid" : "0002",
 						"event_comment_uploader_id" : "非常吃货",
 						"event_comment_uploader_date" : "2014/03/15"
@@ -266,8 +266,8 @@
 				"event_name": "《阿拉伯的劳伦斯》",
 				"event_loc": "上海影城",
 				"event_loc_eng" : "Shanghai",
-				"event_from_latitude" : 31.208642,
-				"event_form_dimention" : 121.436219,
+				"event_from_latitude" : 31.202457,
+				"event_form_dimention" : 121.429475,
 				"event_description": "影视经典，不得不看。",
 				"event_name_next" : "null",
 				"event_loc_next": "null",
@@ -281,7 +281,7 @@
 						"checklist_item" : "电影票",
 						"checklist_checked": "true"
 					}
-				], 
+				],
 				"event_image_number":1,
 				"event_images":[
 					{
@@ -305,7 +305,7 @@
 						"event_comment_liked" : 291,
 						"event_comment_disliked" : 1,
 						"event_comment_voted" : 292,
-						"event_comment_balanced" : 290, 
+						"event_comment_balanced" : 290,
 						"event_comment_uploader_uid" : "0009",
 						"event_comment_uploader_id" : "101",
 						"event_comment_uploader_date" : "2014/03/14"
@@ -341,7 +341,7 @@
 						"event_comment_liked" : 100,
 						"event_comment_disliked" : 15,
 						"event_comment_voted" : 115,
-						"event_comment_balanced" : 85, 
+						"event_comment_balanced" : 85,
 						"event_comment_uploader_uid" : "0002",
 						"event_comment_uploader_id" : "非常吃货",
 						"event_comment_uploader_date" : "2014/03/15"
