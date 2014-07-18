@@ -14,6 +14,7 @@
 <link rel="import" href="../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../bower_components/paper-menu-button/paper-menu-button.html">
+<link rel="import" href="../bower_components/paper-toast/paper-toast.html">
 
 <link rel="import" href="drawer-menu.html">
 <link rel="import" href="trip-list.html">
@@ -91,6 +92,10 @@
         top: 56px !important;
       }
 
+      paper-toast > div {
+        color: #44b3e4;
+      }
+
       @media (min-width: 641px) {
         #tabs {
           width: 400px;
@@ -116,6 +121,7 @@
         <paper-icon-button icon="search" on-click="{{searchTrips}}"></paper-icon-button>
         <paper-menu-button icon="more-vert" halign="right">
           <paper-item id="activateFullScreen"><core-icon icon="fullscreen"></core-icon> Full Screen</paper-item>
+          <paper-item on-click="{{share}}"><core-icon icon="social:share-alt"></core-icon> Share</paper-item>
           <paper-item on-click="{{gotoGithub}}"><core-icon icon="device:developer-mode"></core-icon> Fork on Github</paper-item>
         </paper-menu-button>
         <!-- <paper-ripple fit class="background-ripple"></paper-ripple> -->
@@ -147,6 +153,9 @@
         </core-drawer-panel>
       </div>
     </core-header-panel>
+    <paper-toast id="toast" role="alert" text="{{toastMessage}}">
+      <div>DISMISS</div>
+    </paper-toast>
   </template>
   <script>
     Polymer('quest-app', {
@@ -222,6 +231,19 @@
       },
       gotoGithub: function (e, d, s) {
         window.open('https://github.com/akasfei/questapp', '_blank');
+      },
+      share: function () {
+        var content = '';
+        if (this.cardPageSelected <= 1) {
+          this.toastMessage = 'Please select a TRIP or an EVENT.'
+          return this.$.toast.show();
+        } else if (this.cardPageSelected == 2) {
+          content = this.$.eventList.trip.name_Chinese + ': ' + this.this.$.eventList.trip.trip_description;
+        } else if (this.cardPageSelected == 3) {
+          var e = this.$.navigationList.nodes[this.$.navigationList.index]
+          content = e.event_name + ': ' + e.event_description + ' @' + e.event_loc;
+        }
+        window.location.href = 'sms://10086?body=' + encodeURIComponent(content);
       }
     });
   </script>
