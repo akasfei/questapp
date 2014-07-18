@@ -46,8 +46,6 @@
     rectangle : new google.maps.Rectangle(),
     map : null,
     ready: function () {
-      window.mapObj = this;
-      console.log(this);
       var self = this;
       var VLats = this.lats?this.lats.split(","):null;
       var VLons = this.lons?this.lons.split(","):null;
@@ -60,7 +58,7 @@
           navigator.geolocation.getCurrentPosition(function(e){
             self.map = new google.maps.Map(document.getElementById("map_canvas"),self.mapOptions);
             self.marker.push(new google.maps.Marker({
-              position: self.mapOptions.center,
+              position: new google.maps.LatLng(e.coords.latitude, e.coords.longitude),
               map: self.map
             }));
             //self.addDirection.call(self,[{lat:32,lon:116,title:"1:haha"},{lat:32.1,lon:116.1,title:"2:hehe"}]);
@@ -146,7 +144,6 @@
         navigator.geolocation.getCurrentPosition(function(e){
           self.currentLocation.lat = e.coords.latitude;
           self.currentLocation.lon = e.coords.longitude;
-          console.log("getCurrentLocation",e,self.currentLocation)
           if(e){
             hasGetLocaltion = true;
           }
@@ -223,7 +220,6 @@
 
       self.directionsService.route(request, function(result, status) {
         var routesLeg = result.routes[0].legs;
-        console.log(result.routes[0].legs);
         for(var i = 0; i < routesLeg.length; ++i){
           (function(num){
             switch(num){
@@ -244,6 +240,10 @@
             self.directionsDisplay.setDirections(result);
             console.log(result)
         });
+    },
+    moveTo:function(dot){
+      this.map.setCenter(new google.maps.LatLng(dot.lat,dot.lon));
+      this.map.setZoom(15);
     }
   });
   </script>
