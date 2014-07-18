@@ -6,7 +6,7 @@
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../bower_components/paper-tabs/paper-tabs.html">
 
-<polymer-element name="navigation-list">
+<polymer-element name="navigation-list" attributes="mapsApi">
   <template>
     <style>
       :host {
@@ -26,15 +26,11 @@
       }
 
       .card.directions {
-        padding: 0;
-      }
-      paper-tabs {
-        width: 100%;
-        height: 36px;
         color: #333;
+        padding: 0 8px;
       }
       paper-tabs::shadow #selectionBar {
-        height: 4px;
+        height: 3px;
         background-color: #00c2ff;
       }
       paper-tabs paper-tab::shadow #ink {
@@ -43,22 +39,26 @@
     </style>
     <div class="card directions">
       <paper-shadow z="2"></paper-shadow>
-      <paper-tabs selected="{{directionMode}}">
-        <paper-tab><core-icon icon="maps:directionswalk" size="16"></core-icon></paper-tab>
-        <paper-tab><core-icon icon="maps:directions-car" size="16"></core-icon></paper-tab>
-        <paper-tab><core-icon icon="maps:directions-transit" size="16"></core-icon></paper-tab>
-      </paper-tabs>
+      <div horizontal layout center>
+        <paper-icon-button icon="close" on-click="{{close}}"></paper-icon-button>
+        <paper-tabs selected="{{directionMode}}" flex>
+          <paper-tab><core-icon icon="maps:directionswalk"></core-icon></paper-tab>
+          <paper-tab><core-icon icon="maps:directions-car"></core-icon></paper-tab>
+          <paper-tab><core-icon icon="maps:directions-transit"></core-icon></paper-tab>
+        </paper-tabs>
+        <paper-icon-button icon="history" on-click="{{toStart}}"></paper-icon-button>
+      </div>
     </div>
-    <core-animated-pages transitions="slide-from-right" selected="{{index}}">
+    <core-animated-pages transitions="slide-from-right cross-fade" selected="{{index}}">
       <template repeat="{{node, nodeIndex in nodes}}">
         <section>
-          <div class="card" horizontal layout center>
+          <div class="card" horizontal layout center cross-fade>
             <paper-shadow z="1"></paper-shadow>
-            <paper-icon-button icon="{{nodeIndex == 0 ? 'close': 'chevron-left'}}" on-click="{{previous}}"></paper-icon-button>
+            <paper-icon-button icon="chevron-left" disabled?="{{nodeIndex == 0 ? true: false}}" on-click="{{previous}}"></paper-icon-button>
             <div flex vertical layout center>
-              <p class="node-title">{{node.title}}</p>
+              <p class="node-title">{{node.event_name}}</p>
             </div>
-            <paper-icon-button icon="{{nodeIndex == nodes.length - 1 ? 'history': 'chevron-right'}}" on-click="{{next}}"></paper-icon-button>
+            <paper-icon-button icon="chevron-right" disabled?="{{nodeIndex == nodes.length - 1 ? true: false}}" on-click="{{next}}"></paper-icon-button>
           </div>
         </section>
       </template>
@@ -66,24 +66,40 @@
   </template>
   <script>
   Polymer('navigation-list', {
-    nodes: [
-      {title: 'Node 1'},
-      {title: 'Node 2'},
-      {title: 'Node 3'}
-    ],
+    nodes: [],
     index: 0,
     directionMode: 0,
     previous: function () {
       if (this.index <= 0)
-        this.fire('backward');
+        return this.fire('backward');
       else
         this.index -= 1;
+      if (this.mapsApi) {
+        this.mapsApi.moveTo({
+          latitude: this.nodes[this.index].event_from_latitude,
+          longitude: this.nodes[this.index].event_form_dimention,
+          title: this.nodes[this.index].event_name
+        });
+      }
     },
     next: function () {
       if (this.index == this.nodes.length - 1)
         this.index = 0;
       else
         this.index += 1;
+      if (this.mapsApi) {
+        this.mapsApi.moveTo({
+          latitude: this.nodes[this.index].event_from_latitude,
+          longitude: this.nodes[this.index].event_form_dimention,
+          title: this.nodes[this.index].event_name
+        });
+      }
+    },
+    close: function () {
+      this.fire('backward');
+    },
+    toStart: function () {
+      this.index = 0;
     }
   });
   </script>

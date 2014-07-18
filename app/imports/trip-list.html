@@ -7,6 +7,8 @@
       :host {
         display: block;
         margin: 0 8px;
+        max-height: 550px;
+        overflow-y: scroll;
       }
       trip-card {
         width: 100%;
@@ -15,10 +17,10 @@
     </style>
     <trip-service id="service" query="{{query}}" trips="{{trips}}"></trip-service>
     <div class="trip-container" hidden?="{{!show}}">
-      <template repeat="{{trip in trips}}">
-        <trip-card name="{{trip.title}}" desc="{{trip.desc}}" creator="{{trip.creator}}"
-          location="{{trip.location}}" duration="{{trip.duration}}" stars="{{trip.stars}}"
-          comments="{{trip.comments}}"></trip-card>
+      <template repeat="{{trip, i in trips}}">
+        <trip-card name="{{trip.name_Chinese}}" desc="{{trip.trip_description}}" creator="{{trip.creator_id}}"
+          location="{{trip.trip_event_sum}}" duration="{{trip.trip_time}}" stars="{{trip.trip_stars}}"
+          comments="{{trip.trip_comments}}" index="{{i}}" key="{{trip.key}}"></trip-card>
       </template>
     </div>
   </template>

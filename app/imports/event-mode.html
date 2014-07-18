@@ -4,7 +4,7 @@
 
 <link rel="import" href="event-card.html">
 
-<polymer-element name="event-mode" attributes="tripName mapsApi mode">
+<polymer-element name="event-mode" attributes="key mapsApi mode">
   <template>
     <style>
       :host {
@@ -12,13 +12,12 @@
       }
     </style>
     <core-ajax id="ajax"
-      auto
-      url="../api/event-test.json"
+      url="{{'../api/api-' + key + '-nodes.json'}}"
       on-core-response="{{eventsLoaded}}"
       handleAs="json">
     </core-ajax>
     <template repeat="{{e, eIndex in events}}">
-      <event-card name="{{e.title}}" desc="{{e.desc}}" tripName="{{tripName}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
+      <event-card name="{{e.event_name}}" desc="{{e.event_description}}" mapsApi="{{mapsApi}}" index="{{eIndex}}"></event-card>
     </template>
   </template>
   <script>
@@ -26,8 +25,25 @@
     ready: function () {
       this.events = []
     },
+    load: function () {
+      this.$.ajax.go();
+    },
     eventsLoaded: function () {
-      this.events = this.$.ajax.response.slice(0);
+      this.events = this.$.ajax.response.trip_event;
+      if (this.mapsApi) {
+        this.mapsApi.removeDirections();
+        // this.mapsApi.showCurrentLocation();
+        var direction = [this.mapsApi.currentLocation];
+        for (var i = 0; i < this.events.length; i++) {
+          direction.push({
+            latitude: this.events[i].event_from_latitude,
+            longitude: this.events[i].event_form_dimention,
+            title:this.events[i].event_name
+          });
+        }
+        this.mapsApi.addDirection(direction);
+      }
+      this.fire('events-loaded');
     }
   });
   </script>

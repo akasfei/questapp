@@ -55,8 +55,7 @@
     }
     </style>
     <core-ajax id="ajax"
-      auto
-      url="../api/quests.json"
+      url="../api/api-trips.json"
       params="{{}}"
       on-core-response="{{tripsLoaded}}"
       handleAs="json">
@@ -75,13 +74,14 @@
       var trips = this.$.ajax.response.slice(0);
       if (this.query && this.query.length > 0) {
         this.trips = [];
-        var q = new RegExp(this.query)
         for (var i = 0; i < trips.length; i++) {
-          if (q.test(trips[i].title))
+          if ( trips[i].name_Chinese.search(this.query) >= 0
+            || trips[i].name_English.search(this.query) >= 0)
             this.trips.push(trips[i]);
         }
       } else
         this.trips = trips;
+      this.fire('search-complete');
     }
   });
   </script>
