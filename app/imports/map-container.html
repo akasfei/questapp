@@ -1,7 +1,6 @@
 <link rel="import" href="../bower_components/google-map/google-map.html" >
-<link rel="import" href="map-directions.html">
 
-<polymer-element name="map-container" attributes="lats,lons">
+<polymer-element name="map-container" attributes="lats lons">
   <template>
     <style>
       google-map {
@@ -34,26 +33,29 @@
   </template>
   <script>
   Polymer('map-container', {
-    bounds : new google.maps.LatLngBounds (),
-    directionsDisplay : new google.maps.DirectionsRenderer(),
-    directionsService : new google.maps.DirectionsService(),
+    bounds : null,
+    directionsDisplay : null,
+    directionsService : null,
     marker : [],
-    mapOptions : {
-            zoom: 15,
-            mapTypeId: google.maps.MapTypeId.ROADMAP,
-            center:new google.maps.LatLng(39.90960456049752,116.3972282409668)
-          },
+    mapOptions : null,
     currentLocation:{
       lat:null,
       lon:null
     },
-    rectangle : new google.maps.Rectangle(),
+    rectangle : null,
     map : null,
     ready: function () {
-      this.showCurrentLocation();
-    },
-    showCurrentLocation: function () {
-      var self = this;
+      this.bounds = new google.maps.LatLngBounds (),
+      this.directionsDisplay = new google.maps.DirectionsRenderer({suppressMarkers: true}),
+      this.directionsService = new google.maps.DirectionsService(),
+      this.mapOptions = {
+        zoom: 15,
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        center:new google.maps.LatLng(39.90960456049752,116.3972282409668),
+        disableDefaultUI: true
+      };
+      this.rectangle = new google.maps.Rectangle();
+
       var VLats = this.lats?this.lats.split(","):null;
       var VLons = this.lons?this.lons.split(","):null;
 
@@ -63,11 +65,16 @@
       var self = this;
       if (navigator.geolocation){
           navigator.geolocation.getCurrentPosition(function(e){
-            self.map = new google.maps.Map(document.getElementById("map_canvas"),self.mapOptions);
+            self.map = new google.maps.Map(self.$.map_canvas,self.mapOptions);
             self.marker.push(new google.maps.Marker({
               position: new google.maps.LatLng(e.coords.latitude, e.coords.longitude),
               map: self.map
             }));
+            self.currentLocation = {
+              lat: e.coords.latitude,
+              lon: e.coords.longitude
+            }
+            self.moveTo(self.currentLocation);
             //self.addDirection.call(self,[{lat:32,lon:116,title:"1:haha"},{lat:32.1,lon:116.1,title:"2:hehe"}]);
           });
         }
@@ -133,13 +140,13 @@
         self.marker.push(new google.maps.Marker({
           position: new google.maps.LatLng(VLats[0],VLons[0]),
           map: self.map,
-          icon: 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
+          icon: 'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
         }));
       }
 
       self.directionsService.route(request, function(result, status) {
-            self.directionsDisplay.setDirections(result);
-        });
+        self.directionsDisplay.setDirections(result);
+      });
     },
     showCurrentLocation:function(){
       return this.currentLocation;
@@ -172,6 +179,11 @@
       window.addDirection = this.addDirection;
       var self = this;
       self.bounds = new google.maps.LatLngBounds ()
+
+      if (self.directionsMarkers && self.directionsMarkers.length > 0) {
+        for (var i = 0; i < self.directionsMarkers.length; i++)
+          self.directionsMarkers[i].setMap(null);
+      }
 
       if(dots){
           var southLine = parseFloat(dots[0].lat),
@@ -215,7 +227,7 @@
         self.marker.push(new google.maps.Marker({
           position: new google.maps.LatLng(dots[0].lat,dots[0].lon),
           map: self.map,
-          icon: 'http://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1',
+          icon: 'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=A&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1',
           title:dots[0].title
         }));
         self.map.setCenter(new google.maps.LatLng(dots[0].lat,dots[0].lon));
@@ -244,6 +256,14 @@
             }
           }).call(self,i);
         }
+            self.directionsMarkers = [];
+            for (var i = 1;i < dots.length;i++) {
+              self.directionsMarkers.push(new google.maps.Marker({
+                position: new google.maps.LatLng(dots[i].lat, dots[i].lon),
+                map: self.map,
+                icon: 'https://mt.googleapis.com/vt/icon/name=icons/spotlight/spotlight-waypoint-b.png&text=' + i + '&psize=16&font=fonts/Roboto-Regular.ttf&color=ff333333&ax=44&ay=48&scale=1'
+              }));
+            }
             self.directionsDisplay.setDirections(result);
             console.log(result)
         });
@@ -251,6 +271,20 @@
     moveTo:function(dot){
       this.map.setCenter(new google.maps.LatLng(dot.lat,dot.lon));
       this.map.setZoom(15);
+    },
+    locToString: function (loc) {
+      var res = '';
+      var longitude = new Number(loc.longitude);
+      var latitude = new Number(loc.latitude);
+      if (longitude < 0)
+        res += (-1 * longitude) + 'W';
+      else
+        res += longitude + 'E';
+      if (latitude < 0)
+        res += (-1 * latitude) + 'S';
+      else
+        res += latitude + 'N';
+      return res;
     }
   });
   </script>

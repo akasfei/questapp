@@ -78,8 +78,8 @@
         this.index -= 1;
       if (this.mapsApi) {
         this.mapsApi.moveTo({
-          latitude: this.nodes[this.index].event_from_latitude,
-          longitude: this.nodes[this.index].event_form_dimention,
+          lat: this.nodes[this.index].event_from_latitude,
+          lon: this.nodes[this.index].event_form_dimention,
           title: this.nodes[this.index].event_name
         });
       }
@@ -91,8 +91,8 @@
         this.index += 1;
       if (this.mapsApi) {
         this.mapsApi.moveTo({
-          latitude: this.nodes[this.index].event_from_latitude,
-          longitude: this.nodes[this.index].event_form_dimention,
+          lat: this.nodes[this.index].event_from_latitude,
+          lon: this.nodes[this.index].event_form_dimention,
           title: this.nodes[this.index].event_name
         });
       }
@@ -102,6 +102,13 @@
     },
     toStart: function () {
       this.index = 0;
+      if (this.mapsApi) {
+        this.mapsApi.moveTo({
+          lat: this.nodes[this.index].event_from_latitude,
+          lon: this.nodes[this.index].event_form_dimention,
+          title: this.nodes[this.index].event_name
+        });
+      }
     },
     openGoogleMaps: function () {
       window.location.href = 'google.navigation:mode=d&q=' + this.mapsApi.locToString({

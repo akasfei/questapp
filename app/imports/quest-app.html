@@ -207,8 +207,8 @@
         this.$.navigationList.index = d.index;
         this.$.navigationList.nodes = this.$.eventList.$.eventMode.events;
         this.$.map.moveTo({
-          latitude: this.$.eventList.$.eventMode.events[d.index].event_from_latitude,
-          longitude: this.$.eventList.$.eventMode.events[d.index].event_form_dimention,
+          lat: this.$.eventList.$.eventMode.events[d.index].event_from_latitude,
+          lon: this.$.eventList.$.eventMode.events[d.index].event_form_dimention,
           title: this.$.eventList.$.eventMode.events[d.index].event_name
         });
         this.animationForward();
