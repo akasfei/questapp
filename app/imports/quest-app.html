@@ -116,16 +116,15 @@
         <paper-icon-button icon="search" on-click="{{searchTrips}}"></paper-icon-button>
         <paper-menu-button icon="more-vert" halign="right">
           <paper-item id="activateFullScreen"><core-icon icon="fullscreen"></core-icon> Full Screen</paper-item>
-          <paper-item><core-icon icon="social:share-alt"></core-icon> Share</paper-item>
-          <paper-item><core-icon icon="star-outline"></core-icon> Star</paper-item>
+          <paper-item on-click="{{gotoGithub}}"><core-icon icon="device:developer-mode"></core-icon> Fork on Github</paper-item>
         </paper-menu-button>
         <!-- <paper-ripple fit class="background-ripple"></paper-ripple> -->
       </core-toolbar>
       <br>
       <div class="container" layout vertical center>
-        <core-drawer-panel id="drawer-panel" selected="{{opened? 'drawer': 'main'}}">
+        <core-drawer-panel id="drawer-panel" selected="{{opened? 'drawer': 'main'}}" on-click="{{drawerClicked}}">
           <section drawer vertical layout class="drawer">
-            <drawer-menu></drawer-menu>
+            <drawer-menu on-recommended-clicked="{{gotoRecommended}}"></drawer-menu>
           </section>
           <section main class="drawer-main" vertical layout center relative>
             <map-container id="map" class="background-map" fit></map-container>
@@ -157,7 +156,9 @@
         this.showTripList = false;
         this.cardPageSelected = 0;
         this.$.activateFullScreen.addEventListener('click', function () {
-          if (this.fullScreen) {
+          if ( document.FullScreen
+            || document.mozFullScreen
+            || document.webkitIsFullScreen ) {
             (
               document.exitFullscreen ||
               document.mozExitFullscreen ||
@@ -175,6 +176,9 @@
       },
       toggleDrawer: function () {
         this.opened = !this.opened;
+      },
+      drawerClicked: function (e, d, s) {
+        if (s.$.scrim) this.opened = false;
       },
       searchTrips: function () {
         this.showTripList = true;
@@ -210,6 +214,14 @@
       showTripDialog: function (e, d, s) {
         this.$.tripDialog.trip = d;
         this.$.tripDialog.toggle();
+      },
+      gotoRecommended: function (e, d, s) {
+        this.searchInput = 'Recommended';
+        this.opened = false;
+        this.$.tripList.refresh();
+      },
+      gotoGithub: function (e, d, s) {
+        window.open('https://github.com/akasfei/questapp', '_blank');
       }
     });
   </script>

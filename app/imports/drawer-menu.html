@@ -38,7 +38,7 @@
     }
     </style>
 
-    <core-item icon="favorite" label="Recommended">
+    <core-item icon="favorite" label="Recommended" on-click="{{fireRecommended}}">
       <paper-ripple class="background-ripple" initialOpacity="0.2" opacityDecayVelocity="0.4"></paper-ripple>
       <!-- <a href="javascript:void(0)"></a> -->
     </core-item>
@@ -73,7 +73,9 @@
 
   <script>
   Polymer({
-
+    fireRecommended: function () {
+      this.fire('recommended-clicked');
+    }
   });
   </script>
 </polymer-element>
