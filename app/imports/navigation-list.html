@@ -58,6 +58,7 @@
             <div flex vertical layout center>
               <p class="node-title">{{node.event_name}}</p>
             </div>
+            <paper-icon-button on-click="{{openGoogleMaps}}" icon="maps:directions"></paper-icon-button>
             <paper-icon-button icon="chevron-right" disabled?="{{nodeIndex == nodes.length - 1 ? true: false}}" on-click="{{next}}"></paper-icon-button>
           </div>
         </section>
@@ -100,6 +101,12 @@
     },
     toStart: function () {
       this.index = 0;
+    },
+    openGoogleMaps: function () {
+      window.location.href = 'google.navigation:q=' + this.mapsApi.locToString({
+        latitude: this.nodes[this.index].event_from_latitude,
+        longitude: this.nodes[this.index].event_form_dimention
+      });
     }
   });
   </script>
