@@ -72,15 +72,17 @@
           </div>
           <div vertical layout center-justified>
             <paper-icon-button icon="close" on-click="{{fireBackward}}"></paper-icon-button>
+            <paper-icon-button icon="{{listActive? 'expand-less': 'expand-more'}}" on-click="{{toggleList}}"></paper-icon-button>
           </div>
         </section>
       </div>
-      <event-mode id="eventMode" key="{{trip.key}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}"></event-mode>
+      <event-mode id="eventMode" key="{{trip.key}}" mapsApi="{{mapsApi}}" on-event-selected="{{eventSelected}}" hidden?="{{!listActive}}"></event-mode>
     </div>
   </template>
   <script>
   Polymer('event-list', {
     animatedPage: 0,
+    listActive: false,
     ready: function () {
       this.selected = 0;
       this.modes = ['walk', 'car', 'transit'];
@@ -93,6 +95,9 @@
     },
     loadEvents: function () {
       this.$.eventMode.load();
+    },
+    toggleList: function () {
+      this.listActive = !this.listActive;
     }
   });
   </script>
